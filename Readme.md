@@ -1,8 +1,8 @@
 # Личный проект «Угадай мелодию» [![Build status][travis-image]][travis-url]
 
 * Студент: [Олег Зубов](https://up.htmlacademy.ru/ecmascript/2/user/42701).
-* Наставник: `Неизвестно`.
-
+* Наставник: [Никита Ткачук](https://up.htmlacademy.ru/ecmascript/2/user/450211).
+ 
 ---
 
 _Не удаляйте и не изменяйте папки и файлы:_
