@@ -7,10 +7,10 @@ const screens = [
   `.main--level-genre`,
   `.main--bad`,
   `.main--good`
-];
+].map((selector) => template.querySelector(selector));
 let activeScreen;
 
-const setValue = (value) => {
+const handlerScreenIndex = (value) => {
   if (value > screens.length - 1) {
     return 0;
   } else if (value < 0) {
@@ -21,26 +21,22 @@ const setValue = (value) => {
 };
 
 const showScreen = (num = 0) => {
-  if (num > screens.length - 1 || num < 0) {
-    return false;
-  }
-
   const oldMain = app.querySelector(`.main`);
-  const newMain = template.querySelector(screens[num]).cloneNode(true);
+  const newMain = screens[num].cloneNode(true);
   app.replaceChild(newMain, oldMain);
   activeScreen = num;
-  return true;
 };
 
 showScreen();
 
 document.addEventListener(`keydown`, (event) => {
   if (event.altKey) {
-    event.preventDefault();
     if (event.keyCode === 37) {
-      showScreen(setValue(--activeScreen));
+      event.preventDefault();
+      showScreen(handlerScreenIndex(--activeScreen));
     } else if (event.keyCode === 39) {
-      showScreen(setValue(++activeScreen));
+      event.preventDefault();
+      showScreen(handlerScreenIndex(++activeScreen));
     }
   }
 });
