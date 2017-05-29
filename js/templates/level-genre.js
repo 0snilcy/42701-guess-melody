@@ -45,9 +45,12 @@ btn.disabled = true;
 btn.addEventListener(`click`, () => showScreen(Math.round(Math.random()) ? nextScreenGood : nextScreenBad));
 
 const inputList = levelGenre.querySelector(`.genre`);
-inputList.addEventListener(`click`, () => {
-  const valid = Boolean(levelGenre.querySelector(`.genre-answer input[name=answer]:checked`));
-  btn.disabled = !valid;
+inputList.addEventListener(`click`, (event) => {
+  if (event.target.getAttribute(`name`) === `answer`) {
+    const valid = Boolean(levelGenre.querySelector(`.genre-answer input[name=answer]:checked`));
+    btn.disabled = !valid;
+    event.stopPropagation();
+  }
 });
 
 export default levelGenre;
