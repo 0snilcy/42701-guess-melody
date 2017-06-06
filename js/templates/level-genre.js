@@ -42,7 +42,8 @@ const levelGenre = getElement(`
 
 const btn = levelGenre.querySelector(`.genre-answer-send`);
 btn.disabled = true;
-btn.addEventListener(`click`, () => showScreen(Math.round(Math.random()) ? nextScreenGood : nextScreenBad));
+btn.addEventListener(`click`, () => showScreen(nextScreenBad));
+// btn.addEventListener(`click`, () => showScreen(Math.round(Math.random()) ? nextScreenGood : nextScreenBad));
 
 const inputList = levelGenre.querySelector(`.genre`);
 inputList.addEventListener(`click`, (event) => {

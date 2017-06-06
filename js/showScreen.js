@@ -3,9 +3,13 @@
  */
 const app = document.querySelector(`.app`);
 
-const showScreen = (screen) => {
+const showScreen = ([screen, callback]) => {
   app.innerHTML = ``;
-  app.appendChild(screen);
+  const clone = screen.cloneNode(true);
+  app.appendChild(clone);
+  if (callback) {
+    callback();
+  }
 };
 
 export default showScreen;

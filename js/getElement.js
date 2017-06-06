@@ -5,7 +5,7 @@
 const getElement = (string) => {
   const container = document.createElement(`template`);
   container.innerHTML = string;
-  return container.cloneNode(true).content;
+  return container.content;
 };
 
 export default getElement;

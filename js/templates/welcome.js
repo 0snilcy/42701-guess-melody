@@ -19,7 +19,7 @@ const welcome = getElement(`
   </section>
 `);
 
-const btn = welcome.querySelector(`.main-play`);
-btn.addEventListener(`click`, () => showScreen(nextScreen));
-
-export default welcome;
+export default [welcome, () => {
+  const btn = document.querySelector(`.main-play`);
+  btn.addEventListener(`click`, () => showScreen(nextScreen));
+}];
