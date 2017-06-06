@@ -3,7 +3,7 @@
  */
 
 import getElement from '../getElement';
-import nextScreenBad from './welcome';
+import welcome from './welcome';
 import showScreen from '../showScreen';
 
 const resultBad = getElement(`
@@ -17,6 +17,7 @@ const resultBad = getElement(`
 `);
 
 const btn = resultBad.querySelector(`.main-replay`);
-btn.addEventListener(`click`, () => showScreen(nextScreenBad));
+console.log(welcome);
+btn.addEventListener(`click`, () => showScreen(welcome));
 
 export default resultBad;

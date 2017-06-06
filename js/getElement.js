@@ -2,9 +2,8 @@
  * Created by wakedafuckup on 28.05.17.
  */
 
-const getElement = (string) => {
-  const parser = new DOMParser();
-  return parser.parseFromString(string, `text/html`).body.firstChild;
+export default (string, callback) => {
+  const container = document.createElement(`template`);
+  container.innerHTML = string;
+  return document.importNode(container.content, true);
 };
-
-export default getElement;

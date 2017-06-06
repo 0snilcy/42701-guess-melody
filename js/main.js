@@ -1,4 +1,4 @@
 import showScreen from './showScreen';
-import firstScreen from './templates/welcome';
+import welcome from './templates/welcome';
 
-showScreen(firstScreen);
+showScreen(welcome);

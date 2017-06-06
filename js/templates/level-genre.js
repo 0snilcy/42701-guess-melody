@@ -47,7 +47,7 @@ btn.addEventListener(`click`, () => showScreen(Math.round(Math.random()) ? nextS
 const inputList = levelGenre.querySelector(`.genre`);
 inputList.addEventListener(`click`, (event) => {
   if (event.target.getAttribute(`name`) === `answer`) {
-    const valid = Boolean(levelGenre.querySelector(`.genre-answer input[name=answer]:checked`));
+    const valid = Boolean(inputList.querySelector(`.genre-answer input[name=answer]:checked`));
     btn.disabled = !valid;
     event.stopPropagation();
   }

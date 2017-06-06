@@ -3,9 +3,7 @@
  */
 const app = document.querySelector(`.app`);
 
-const showScreen = (screen) => {
-  const oldMain = app.querySelector(`.main`);
-  app.replaceChild(screen, oldMain);
+export default (screen) => {
+  app.innerHTML = ``;
+  app.appendChild(screen);
 };
-
-export default showScreen;
