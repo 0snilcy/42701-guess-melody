@@ -3,7 +3,11 @@
  */
 const app = document.querySelector(`.app`);
 
-export default (screen) => {
+export default ([screen, callback]) => {
   app.innerHTML = ``;
-  app.appendChild(screen);
+  const clone = screen.cloneNode(true);
+  app.appendChild(clone);
+  if (callback) {
+    callback();
+  }
 };
