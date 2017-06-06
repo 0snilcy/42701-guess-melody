@@ -2,11 +2,10 @@
  * Created by wakedafuckup on 28.05.17.
  */
 
-import getElement from '../getElement';
 import nextScreen from './level-artist';
 import showScreen from '../showScreen';
 
-const welcome = getElement(`
+const welcome = () => `
   <section class="main main--welcome">
     <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
     <button class="main-play">Начать игру</button>
@@ -17,9 +16,9 @@ const welcome = getElement(`
       Удачи!
     </p>
   </section>
-`);
+`;
 
-export default [welcome, () => {
-  const btn = document.querySelector(`.main-play`);
+export default [welcome, (ctx) => {
+  const btn = ctx.querySelector(`.main-play`);
   btn.addEventListener(`click`, () => showScreen(nextScreen));
 }];

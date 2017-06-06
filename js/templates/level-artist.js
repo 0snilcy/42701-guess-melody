@@ -2,11 +2,21 @@
  * Created by wakedafuckup on 28.05.17.
  */
 
-import getElement from '../getElement';
 import nextScreen from './level-genre';
+import {answerList} from './data';
 import showScreen from '../showScreen';
 
-const levelArtist = getElement(`
+const answer = (desc, id) => `
+  <div class="main-answer-wrapper">
+    <input class="main-answer-r" type="radio" id="answer-${id}" name="answer" value="val-1" />
+    <label class="main-answer" for="answer-${id}">
+      <img class="main-answer-preview" src="">
+      ${desc}
+    </label>
+  </div>
+`;
+
+const levelArtist = () => `
   <section class="main main--level main--level-artist">
     <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
       <circle
@@ -27,40 +37,19 @@ const levelArtist = getElement(`
       <h2 class="title main-title">Кто исполняет эту песню?</h2>
       <div class="player-wrapper"></div>
       <form class="main-list">
-        <div class="main-answer-wrapper">
-          <input class="main-answer-r" type="radio" id="answer-1" name="answer" value="val-1" />
-          <label class="main-answer" for="answer-1">
-            <img class="main-answer-preview" src="">
-            Пелагея
-          </label>
-        </div>
-
-        <div class="main-answer-wrapper">
-          <input class="main-answer-r" type="radio" id="answer-2" name="answer" value="val-1" />
-          <label class="main-answer" for="answer-2">
-            <img class="main-answer-preview" src="">
-            Краснознаменная дивизия имени моей бабушки
-          </label>
-        </div>
-
-        <div class="main-answer-wrapper">
-          <input class="main-answer-r" type="radio" id="answer-2" name="answer" value="val-1" />
-          <label class="main-answer" for="answer-2">
-            <img class="main-answer-preview" src="">
-            Lorde
-          </label>
-        </div>
+        ${answerList.map((desc, i) => answer(desc, i + 1)).join(``)}
       </form>
     </div>
   </section>
-`);
+`;
 
-const btnWrap = levelArtist.querySelector(`.main-list`);
-btnWrap.addEventListener(`click`, (event) => {
-  if (event.target.parentNode.classList.contains(`main-answer`)) {
-    showScreen(nextScreen);
-    event.stopPropagation();
-  }
-});
+export default [levelArtist, (ctx) => {
+  const btnWrap = ctx.querySelector(`.main-list`);
 
-export default levelArtist;
+  btnWrap.addEventListener(`click`, (event) => {
+    if (event.target.parentNode.classList.contains(`main-answer`)) {
+      showScreen(nextScreen);
+      event.stopPropagation();
+    }
+  });
+}];

@@ -7,7 +7,7 @@ import welcome from './welcome';
 import showScreen from '../showScreen';
 
 const resultGood = getElement(`
-  <section class="main main--result main--result-good">
+  <section class="main main--result">
     <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
 
     <h2 class="title">Вы настоящий меломан!</h2>
@@ -17,8 +17,7 @@ const resultGood = getElement(`
   </section>
 `);
 
-const btn = resultGood.querySelector(`.main-replay`);
-console.log(welcome);
-btn.addEventListener(`click`, () => showScreen(welcome));
-
-export default resultGood;
+export default [resultGood, () => {
+  const btn = document.querySelector(`.main-replay`);
+  btn.addEventListener(`click`, () => showScreen(welcome));
+}];
