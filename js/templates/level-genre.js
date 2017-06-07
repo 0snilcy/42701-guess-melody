@@ -3,45 +3,46 @@
  */
 
 import showScreen from '../showScreen';
-import {stats} from './data';
 import nextScreen from './result';
+import getElement from '../getElement';
+import {result as dataList} from './data';
 
-const answer = (id) => `
-  <div class="genre-answer" data-item="${id}">
-    <div class="player-wrapper"></div>
-    <input type="checkbox" name="answer" value="answer-${id}" id="a-${id}">
-    <label class="genre-answer-check" for="a-${id}"></label>
-  </div>
-`;
+export default (data) => {
+  const answerCreate = (elem, id) => `
+    <div class="genre-answer">
+      <div class="player-wrapper"></div>
+      <input type="checkbox" name="answer" value="answer-${id + 1}" id="a-${id + 1}">
+      <label class="genre-answer-check" for="a-${id + 1}"></label>
+    </div>
+  `;
 
-let answerList = ``;
-for (let i = 4; i;) {
-  answerList += answer(i--);
-}
+  const template = `
+    <section class="main main--level main--level-genre">
+      <h2 class="title">${data.title}</h2>
+      <form class="genre">
+        ${data.answers.map(answerCreate).join(``)}
+        <button class="genre-answer-send" type="submit">Ответить</button>
+      </form>
+    </section>
+  `;
 
-const levelGenre = () => `
-  <section class="main main--level main--level-genre">
-    <h2 class="title">Выберите инди-рок треки</h2>
-    <form class="genre">
-      ${answerList}
-      <button class="genre-answer-send" type="submit">Ответить</button>
-    </form>
-  </section>
-`;
+  const domElement = getElement(template);
+  const players = [...domElement.querySelectorAll(`.player-wrapper`)];
+  players.forEach((item, id) => window.initializePlayer(item, data.answers[id]));
 
-export default [levelGenre, (ctx) => {
-  const btn = ctx.querySelector(`.genre-answer-send`);
+  const inputList = [...domElement.querySelectorAll(`.genre-answer input[name=answer]`)];
+  inputList.forEach((item) => item.addEventListener(`click`, () => {
+    btn.disabled = !inputList.some((input) => input.checked);
+  }));
+
+  const isWinner = !Math.round(Math.random());
+  const btn = domElement.querySelector(`.genre-answer-send`);
   btn.disabled = true;
-  btn.addEventListener(`click`, () => showScreen(nextScreen));
-
-  const inputList = ctx.querySelector(`.genre`);
-  inputList.addEventListener(`click`, (event) => {
-    if (event.target.getAttribute(`name`) === `answer`) {
-      const valid = Boolean(inputList.querySelector(`.genre-answer input[name=answer]:checked`));
-      btn.disabled = !valid;
-
-      stats.win = !Math.round(Math.random());
-      event.stopPropagation();
-    }
+  btn.addEventListener(`click`, (event) => {
+    event.preventDefault();
+    showScreen(nextScreen(dataList[isWinner ? `victory` : `defeat`]));
+    return false;
   });
-}];
+
+  return domElement;
+};
