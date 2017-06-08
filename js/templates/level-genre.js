@@ -2,55 +2,49 @@
  * Created by wakedafuckup on 28.05.17.
  */
 
-import getElement from '../getElement';
-import nextScreenGood from './result-good';
-import nextScreenBad from './result-bad';
 import showScreen from '../showScreen';
+import nextScreen from './result';
+import getElement from '../getElement';
+import {result as dataList} from './data';
 
-const levelGenre = getElement(`
-  <section class="main main--level main--level-genre">
-    <h2 class="title">Выберите инди-рок треки</h2>
-    <form class="genre">
-      <div class="genre-answer">
-        <div class="player-wrapper"></div>
-        <input type="checkbox" name="answer" value="answer-1" id="a-1">
-        <label class="genre-answer-check" for="a-1"></label>
-      </div>
+const answerCreate = (elem, id) => `
+  <div class="genre-answer">
+    <div class="player-wrapper"></div>
+    <input type="checkbox" name="answer" value="answer-${id + 1}" id="a-${id + 1}">
+    <label class="genre-answer-check" for="a-${id + 1}"></label>
+  </div>
+`;
 
-      <div class="genre-answer">
-        <div class="player-wrapper"></div>
-        <input type="checkbox" name="answer" value="answer-1" id="a-2">
-        <label class="genre-answer-check" for="a-2"></label>
-      </div>
+export default (data) => {
+  const template = `
+    <section class="main main--level main--level-genre">
+      <h2 class="title">${data.title}</h2>
+      <form class="genre">
+        ${data.answers.map(answerCreate).join(``)}
+        <button class="genre-answer-send" type="submit">Ответить</button>
+      </form>
+    </section>
+  `;
 
-      <div class="genre-answer">
-        <div class="player-wrapper"></div>
-        <input type="checkbox" name="answer" value="answer-1" id="a-3">
-        <label class="genre-answer-check" for="a-3"></label>
-      </div>
+  const domElement = getElement(template);
+  const players = [...domElement.querySelectorAll(`.player-wrapper`)];
+  players.forEach((item, id) => window.initializePlayer(item, data.answers[id]));
 
-      <div class="genre-answer">
-        <div class="player-wrapper"></div>
-        <input type="checkbox" name="answer" value="answer-1" id="a-4">
-        <label class="genre-answer-check" for="a-4"></label>
-      </div>
+  const inputList = [...domElement.querySelectorAll(`.genre-answer input[name=answer]`)];
+  inputList.forEach((item) => {
+    item.addEventListener(`click`, () => {
+      btn.disabled = !inputList.some((input) => input.checked);
+    });
+  });
 
-      <button class="genre-answer-send" type="submit">Ответить</button>
-    </form>
-  </section>
-`);
+  const isWinner = !Math.round(Math.random());
+  const btn = domElement.querySelector(`.genre-answer-send`);
+  btn.disabled = true;
+  btn.addEventListener(`click`, (event) => {
+    event.preventDefault();
+    showScreen(nextScreen(dataList[isWinner ? `victory` : `defeat`]));
+    return false;
+  });
 
-const btn = levelGenre.querySelector(`.genre-answer-send`);
-btn.disabled = true;
-btn.addEventListener(`click`, () => showScreen(Math.round(Math.random()) ? nextScreenGood : nextScreenBad));
-
-const inputList = levelGenre.querySelector(`.genre`);
-inputList.addEventListener(`click`, (event) => {
-  if (event.target.getAttribute(`name`) === `answer`) {
-    const valid = Boolean(levelGenre.querySelector(`.genre-answer input[name=answer]:checked`));
-    btn.disabled = !valid;
-    event.stopPropagation();
-  }
-});
-
-export default levelGenre;
+  return domElement;
+};
