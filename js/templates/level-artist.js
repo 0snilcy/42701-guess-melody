@@ -7,17 +7,17 @@ import showScreen from '../showScreen';
 import getElement from '../getElement';
 import {levelGenre as dataList} from './data';
 
-export default (data) => {
-  const answer = (item, id) => `
-    <div class="main-answer-wrapper">
-      <input class="main-answer-r" type="radio" id="answer-${id + 1}" name="answer" value="${id + 1}" />
-      <label class="main-answer" for="answer-${id + 1}">
-        <img class="main-answer-preview" src="${item.pick}">
-        ${item.title}
-      </label>
-    </div>
-  `;
+const answer = (item, id) => `
+  <div class="main-answer-wrapper">
+    <input class="main-answer-r" type="radio" id="answer-${id + 1}" name="answer" value="${id + 1}" />
+    <label class="main-answer" for="answer-${id + 1}">
+      <img class="main-answer-preview" src="${item.pick}">
+      ${item.title}
+    </label>
+  </div>
+`;
 
+export default (data) => {
   const template = `
    <section class="main main--level main--level-artist">
     <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
@@ -47,7 +47,11 @@ export default (data) => {
   const btnList = [...domElement.querySelectorAll(`.main-answer-r`)];
   const player = domElement.querySelector(`.player-wrapper`);
 
-  btnList.forEach((item) => item.addEventListener(`click`, (event) => showScreen(nextScreen(dataList))));
+  btnList.forEach((item) => {
+    item.addEventListener(`click`, () => {
+      showScreen(nextScreen(dataList));
+    });
+  });
   window.initializePlayer(player, data.track);
 
   return domElement;

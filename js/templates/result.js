@@ -8,7 +8,6 @@ import getElement from '../getElement';
 import {welcome as dataList} from './data';
 
 export default (data) => {
-
   const content = () => {
     if (`rating` in data.content) {
       return `<span class="main-comparison">Это&nbsp;лучше чем у&nbsp;${data.content.rating}%&nbsp;игроков</span>`;

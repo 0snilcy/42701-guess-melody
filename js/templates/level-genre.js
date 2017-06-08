@@ -7,15 +7,15 @@ import nextScreen from './result';
 import getElement from '../getElement';
 import {result as dataList} from './data';
 
-export default (data) => {
-  const answerCreate = (elem, id) => `
-    <div class="genre-answer">
-      <div class="player-wrapper"></div>
-      <input type="checkbox" name="answer" value="answer-${id + 1}" id="a-${id + 1}">
-      <label class="genre-answer-check" for="a-${id + 1}"></label>
-    </div>
-  `;
+const answerCreate = (elem, id) => `
+  <div class="genre-answer">
+    <div class="player-wrapper"></div>
+    <input type="checkbox" name="answer" value="answer-${id + 1}" id="a-${id + 1}">
+    <label class="genre-answer-check" for="a-${id + 1}"></label>
+  </div>
+`;
 
+export default (data) => {
   const template = `
     <section class="main main--level main--level-genre">
       <h2 class="title">${data.title}</h2>
@@ -31,9 +31,11 @@ export default (data) => {
   players.forEach((item, id) => window.initializePlayer(item, data.answers[id]));
 
   const inputList = [...domElement.querySelectorAll(`.genre-answer input[name=answer]`)];
-  inputList.forEach((item) => item.addEventListener(`click`, () => {
-    btn.disabled = !inputList.some((input) => input.checked);
-  }));
+  inputList.forEach((item) => {
+    item.addEventListener(`click`, () => {
+      btn.disabled = !inputList.some((input) => input.checked);
+    });
+  });
 
   const isWinner = !Math.round(Math.random());
   const btn = domElement.querySelector(`.genre-answer-send`);
