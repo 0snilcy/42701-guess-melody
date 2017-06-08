@@ -42,8 +42,7 @@ export default (data) => {
   const isWinner = !Math.round(Math.random());
   const btn = domElement.querySelector(`.genre-answer-send`);
   btn.disabled = true;
-  btn.addEventListener(`click`, (event) => {
-    event.preventDefault();
+  btn.addEventListener(`click`, () => {
     showScreen(nextScreen(dataList[isWinner ? `victory` : `defeat`]));
     return false;
   });
