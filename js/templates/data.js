@@ -9,7 +9,7 @@ export const welcome = Object.freeze({
 
 export const levelArtist = Object.freeze({
   title: `Кто исполняет эту песню?`,
-  answers: [{
+  answers: Object.freeze([{
     title: `Пелагея`,
     pick: `https://images.unsplash.com/photo-1495458200315-8a1dce4bbe77?dpr=1&auto=compress,format&fit=max&w=576&q=80&cs=tinysrgb&crop=`
   }, {
@@ -18,18 +18,18 @@ export const levelArtist = Object.freeze({
   }, {
     title: `Тибетское горловое пение`,
     pick: `https://images.unsplash.com/photo-1481762554390-ff5562748bdf?dpr=1&auto=compress,format&fit=max&w=376&q=80&cs=tinysrgb&crop=`
-  }],
+  }]),
   track: `./audio/Fringe.mp3`
 });
 
 export const levelGenre = Object.freeze({
   title: `Выберите инди-рок треки`,
-  answers: [
+  answers: Object.freeze([
     `./audio/Act_Three.mp3`,
     `./audio/Fringe.mp3`,
     `./audio/Militaire_Electronic.mp3`,
     `./audio/Pilots_Of_Stone.mp3`
-  ]
+  ])
 });
 
 export const result = Object.freeze({

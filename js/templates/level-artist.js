@@ -5,6 +5,7 @@
 import nextScreen from './level-genre';
 import showScreen from '../showScreen';
 import getElement from '../getElement';
+import playerTemplate from './player';
 import {levelGenre as dataList} from './data';
 
 const answer = (item, id) => `
@@ -41,6 +42,7 @@ export default (data) => {
       </form>
     </div>
   </section>
+  ${playerTemplate()}
   `;
 
   const domElement = getElement(template);
@@ -52,7 +54,7 @@ export default (data) => {
       showScreen(nextScreen(dataList));
     });
   });
-  window.initializePlayer(player, data.track);
+  window.initializePlayer(player, data.track, domElement);
 
   return domElement;
 };

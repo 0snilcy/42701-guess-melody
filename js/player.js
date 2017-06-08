@@ -42,10 +42,10 @@ const destroyPlayer = (element, state) => {
 };
 
 
-window.initializePlayer = (element, file, autoplay = false, controllable = true) => {
+window.initializePlayer = (element, file, ctx, autoplay = false, controllable = true) => {
   let state = {};
 
-  const content = document.querySelector(`template`)
+  const content = ctx.querySelector(`#templates`)
     .content
     .querySelector(`.player`)
     .cloneNode(true);

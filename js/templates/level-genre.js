@@ -5,6 +5,7 @@
 import showScreen from '../showScreen';
 import nextScreen from './result';
 import getElement from '../getElement';
+import playerTemplate from './player';
 import {result as dataList} from './data';
 
 const answerCreate = (elem, id) => `
@@ -24,11 +25,12 @@ export default (data) => {
         <button class="genre-answer-send" type="submit">Ответить</button>
       </form>
     </section>
+    ${playerTemplate}
   `;
 
   const domElement = getElement(template);
   const players = [...domElement.querySelectorAll(`.player-wrapper`)];
-  players.forEach((item, id) => window.initializePlayer(item, data.answers[id]));
+  players.forEach((item, id) => window.initializePlayer(item, data.answers[id], domElement));
 
   const inputList = [...domElement.querySelectorAll(`.genre-answer input[name=answer]`)];
   inputList.forEach((item) => {
@@ -40,8 +42,7 @@ export default (data) => {
   const isWinner = !Math.round(Math.random());
   const btn = domElement.querySelector(`.genre-answer-send`);
   btn.disabled = true;
-  btn.addEventListener(`click`, (event) => {
-    event.preventDefault();
+  btn.addEventListener(`click`, () => {
     showScreen(nextScreen(dataList[isWinner ? `victory` : `defeat`]));
     return false;
   });
