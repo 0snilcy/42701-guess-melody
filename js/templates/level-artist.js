@@ -2,11 +2,16 @@
  * Created by wakedafuckup on 28.05.17.
  */
 
-import nextScreen from './level-genre';
+import resultData from './model/result-data';
+import result from './result';
 import showScreen from '../showScreen';
 import getElement from '../getElement';
-import playerTemplate from './player';
-import {levelGenre as dataList} from './data';
+import playerTemplate from './playerTemplate';
+import player from '../player';
+import timer from '../timer';
+
+const {defeat, victory} = resultData;
+let dataList;
 
 const answer = (item, id) => `
   <div class="main-answer-wrapper">
@@ -18,7 +23,12 @@ const answer = (item, id) => `
   </div>
 `;
 
-export default (data) => {
+export const initialArtistTemplate = (data, state) => {
+  dataList = Object.assign({}, data);
+  getArtistTemplate(state);
+};
+
+const getArtistTemplate = ({lives, time, correctAnswers}) => {
   const template = `
    <section class="main main--level main--level-artist">
     <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
@@ -35,10 +45,11 @@ export default (data) => {
 
     <div class="main-wrap">
       <div class="main-timer"></div>
-      <h2 class="title main-title">${data.title}</h2>
+      <h2 class="title title--life">Жизни: ${lives}</h2>
+      <h2 class="title main-title">Кто исполняет эту песню?</h2>
       <div class="player-wrapper"></div>
       <form class="main-list">
-        ${data.answers.map(answer).join(``)}
+        ${getNextItem().data.answers.map(answer).join(``)}
       </form>
     </div>
   </section>
@@ -47,14 +58,36 @@ export default (data) => {
 
   const domElement = getElement(template);
   const btnList = [...domElement.querySelectorAll(`.main-answer-r`)];
-  const player = domElement.querySelector(`.player-wrapper`);
+  const playerElement = domElement.querySelector(`.player-wrapper`);
+  let correct;
+  data.answers.forEach((item, id) => {
+    if (`correct` in item && item.correct) {
+      correct = id;
+    }
+  });
 
-  btnList.forEach((item) => {
+  btnList.forEach((item, id) => {
     item.addEventListener(`click`, () => {
-      showScreen(nextScreen(dataList));
+      if (id !== correct) {
+        --lives;
+        if (lives === 0) {
+          showScreen(result(defeat));
+          return;
+        }
+      } else {
+        ++correctAnswers;
+      }
+
+      if (dataList.size) {
+        getNextItem();
+      } else {
+        showScreen(result(victory));
+      }
     });
   });
-  window.initializePlayer(player, data.track, domElement);
+
+  player(playerElement, data.track, domElement);
+  timer(domElement);
 
   return domElement;
 };

@@ -6,13 +6,25 @@ import nextScreen from './welcome';
 import showScreen from '../showScreen';
 import getElement from '../getElement';
 import {welcome as dataList} from './data';
+import stats from './model/initial';
+import rating from './model/rating';
+
+const getUserRating = (answers, time) => {
+  const item = {time, answers};
+  rating.push(item);
+  rating.sort((a, b) => a.time - b.time).sort((a, b) => b.answers - a.answers);
+  const position = rating.indexOf(item) + 1;
+  return Math.round(((rating.length - position) / rating.length) * 100);
+};
 
 export default (data) => {
   const content = () => {
-    if (`rating` in data.content) {
-      return `<span class="main-comparison">Это&nbsp;лучше чем у&nbsp;${data.content.rating}%&nbsp;игроков</span>`;
+    if (stats.life > 0) {
+      return `
+        <div class="main-stat">За&nbsp;2&nbsp;минуты<br>вы&nbsp;отгадали ${stats.answers}&nbsp;мелодий</div>
+        <span class="main-comparison">Это&nbsp;лучше чем у&nbsp;${getUserRating(stats.answers, stats.time)}%&nbsp;игроков</span>`;
     } else {
-      return ``;
+      return `<div class="main-stat">Ничего, вам повезет в следующий раз</div>`
     }
   };
 
@@ -20,7 +32,6 @@ export default (data) => {
     <section class="main main--result">
       <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
       <h2 class="title">${data.title}</h2>
-      <div class="main-stat">${data.content.subtitle}</div>
       ${content()}
       <span role="button" tabindex="0" class="main-replay">Сыграть ещё раз</span>
     </section>
