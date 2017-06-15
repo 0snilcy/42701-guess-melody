@@ -11,7 +11,7 @@ import player from '../player';
 import timer from '../timer';
 
 const {defeat, victory} = resultData;
-let dataList;
+let dataList = [];
 
 const answer = (item, id) => `
   <div class="main-answer-wrapper">
@@ -24,11 +24,15 @@ const answer = (item, id) => `
 `;
 
 export const initialArtistTemplate = (data, state) => {
-  dataList = Object.assign({}, data);
+  for (let item of data) {
+    dataList.push(item);
+  }
   getArtistTemplate(state);
 };
 
 const getArtistTemplate = ({lives, time, correctAnswers}) => {
+  const data = dataList.shift();
+
   const template = `
    <section class="main main--level main--level-artist">
     <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
@@ -49,7 +53,7 @@ const getArtistTemplate = ({lives, time, correctAnswers}) => {
       <h2 class="title main-title">Кто исполняет эту песню?</h2>
       <div class="player-wrapper"></div>
       <form class="main-list">
-        ${getNextItem().data.answers.map(answer).join(``)}
+        ${data.answers.map(answer).join(``)}
       </form>
     </div>
   </section>
@@ -68,20 +72,24 @@ const getArtistTemplate = ({lives, time, correctAnswers}) => {
 
   btnList.forEach((item, id) => {
     item.addEventListener(`click`, () => {
-      if (id !== correct) {
-        --lives;
-        if (lives === 0) {
+
+      // Правильный ли ответ
+      if (id === correct) {
+        ++correctAnswers;
+      } else {
+        if (--lives === 0) {
           showScreen(result(defeat));
           return;
         }
-      } else {
-        ++correctAnswers;
       }
 
-      if (dataList.size) {
-        getNextItem();
+      // Есть ли еще вопросы
+      if (dataList.length) {
+        getArtistTemplate({lives, time, correctAnswers});
       } else {
-        showScreen(result(victory));
+        showScreen(result(
+            victory({lives, time, correctAnswers})
+        ));
       }
     });
   });

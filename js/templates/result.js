@@ -6,25 +6,27 @@ import nextScreen from './welcome';
 import showScreen from '../showScreen';
 import getElement from '../getElement';
 import {welcome as dataList} from './data';
-import stats from './model/initial';
 import rating from './model/rating';
 
 const getUserRating = (answers, time) => {
   const item = {time, answers};
   rating.push(item);
-  rating.sort((a, b) => a.time - b.time).sort((a, b) => b.answers - a.answers);
+  rating
+    .sort((a, b) => a.time - b.time)
+    .sort((a, b) => b.answers - a.answers);
   const position = rating.indexOf(item) + 1;
   return Math.round(((rating.length - position) / rating.length) * 100);
 };
 
 export default (data) => {
   const content = () => {
-    if (stats.life > 0) {
+    if (data) {
+      const {correctAnswers, time} = data;
       return `
-        <div class="main-stat">За&nbsp;2&nbsp;минуты<br>вы&nbsp;отгадали ${stats.answers}&nbsp;мелодий</div>
-        <span class="main-comparison">Это&nbsp;лучше чем у&nbsp;${getUserRating(stats.answers, stats.time)}%&nbsp;игроков</span>`;
+        <div class="main-stat">За&nbsp;2&nbsp;минуты<br>вы&nbsp;отгадали ${correctAnswers}&nbsp;мелодий</div>
+        <span class="main-comparison">Это&nbsp;лучше чем у&nbsp;${getUserRating(correctAnswers, time)}%&nbsp;игроков</span>`;
     } else {
-      return `<div class="main-stat">Ничего, вам повезет в следующий раз</div>`
+      return `<div class="main-stat">Ничего, вам повезет в следующий раз</div>`;
     }
   };
 

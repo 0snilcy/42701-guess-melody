@@ -2,8 +2,8 @@
  * Created by wakedafuckup on 28.05.17.
  */
 
-import showScreen from '../showScreen';
-import nextScreen from './result';
+// import showScreen from '../showScreen';
+// import nextScreen from './result';
 import getElement from '../getElement';
 import playerTemplate from './playerTemplate';
 import player from '../player';
@@ -40,11 +40,11 @@ export default (data) => {
     });
   });
 
-  const isWinner = !Math.round(Math.random());
+  // const isWinner = !Math.round(Math.random());
   const btn = domElement.querySelector(`.genre-answer-send`);
   btn.disabled = true;
   btn.addEventListener(`click`, () => {
-    showScreen(nextScreen(dataList[isWinner ? `victory` : `defeat`]));
+    // showScreen(nextScreen(dataList[isWinner ? `victory` : `defeat`]));
     return false;
   });
 
