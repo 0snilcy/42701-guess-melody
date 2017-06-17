@@ -18,7 +18,8 @@ const getUserRating = (answers, time) => {
   return Math.round(((rating.length - position) / rating.length) * 100);
 };
 
-export default (data) => {
+export default (...data) => {
+  console.log(data);
   const content = () => {
     if (data) {
       const {correctAnswers, time} = data;

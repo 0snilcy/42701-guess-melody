@@ -14,9 +14,12 @@
 
 import {anim as animate} from './animate';
 import formatTime from './time-format';
-import stats from './templates/model/initial';
 
-let {time} = stats;
+let timerValue = 0;
+
+export const getTimerValue = () => {
+  return timerValue;
+};
 
 const redrawCircle = (circle, radius, animation) => {
   const length = 2 * Math.PI * radius;
@@ -45,15 +48,14 @@ const redrawTimer = (timer, animation) => {
   return timer;
 };
 
-
-export default (ctx) => {
+export const initTimer = (start = 0, ctx) => {
   const element = ctx.querySelector(`.timer-line`);
   const radius = parseInt(element.getAttributeNS(null, `r`), 10);
   const timer = ctx.querySelector(`.timer-value`);
 
-  animate.animate(animate.getAnimation(0, 1000, 120), (animation) => {
+  animate.animate(animate.getAnimation(start, 1000, 120), (animation) => {
     redrawCircle(element, radius, animation);
     redrawTimer(timer, animation);
-    return ++time;
+    timerValue++;
   }, () => timer.classList.add(`timer-value--finished`));
 };

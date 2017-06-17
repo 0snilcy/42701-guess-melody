@@ -8,7 +8,7 @@ import showScreen from '../showScreen';
 import getElement from '../getElement';
 import playerTemplate from './playerTemplate';
 import player from '../player';
-import timer from '../timer';
+import {initTimer, getTimerValue} from '../timer';
 
 const {defeat, victory} = resultData;
 let dataList = [];
@@ -27,7 +27,7 @@ export const initialArtistTemplate = (data, state) => {
   for (let item of data) {
     dataList.push(item);
   }
-  getArtistTemplate(state);
+  return getArtistTemplate(state);
 };
 
 const getArtistTemplate = ({lives, time, correctAnswers}) => {
@@ -85,7 +85,8 @@ const getArtistTemplate = ({lives, time, correctAnswers}) => {
 
       // Есть ли еще вопросы
       if (dataList.length) {
-        getArtistTemplate({lives, time, correctAnswers});
+        time = getTimerValue();
+        showScreen(getArtistTemplate({lives, time, correctAnswers}));
       } else {
         showScreen(result(
             victory({lives, time, correctAnswers})
@@ -95,7 +96,7 @@ const getArtistTemplate = ({lives, time, correctAnswers}) => {
   });
 
   player(playerElement, data.track, domElement);
-  timer(domElement);
+  initTimer(time, domElement);
 
   return domElement;
 };
