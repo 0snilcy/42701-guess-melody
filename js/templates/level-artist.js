@@ -64,11 +64,11 @@ const getArtistTemplate = ({lives, time, correctAnswers}, dataList) => {
   const btnList = [...domElement.querySelectorAll(`.main-answer-r`)];
   const playerElement = domElement.querySelector(`.player-wrapper`);
   let correct;
-  data.answers.forEach((item, id) => {
-    if (`correct` in item && item.correct) {
-      correct = id;
-    }
-  });
+  let i = 0;
+  do {
+    correct = i;
+  } while (!data.answers[i++].correct);
+
 
   btnList.forEach((item, id) => {
     item.addEventListener(`click`, () => {
