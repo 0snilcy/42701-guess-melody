@@ -88,9 +88,7 @@ const getArtistTemplate = ({lives, time, correctAnswers}) => {
         time = getTimerValue();
         showScreen(getArtistTemplate({lives, time, correctAnswers}));
       } else {
-        showScreen(result(
-            victory({lives, time, correctAnswers})
-        ));
+        showScreen(result(victory, {lives, time, correctAnswers}));
       }
     });
   });

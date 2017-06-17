@@ -1,4 +1,4 @@
-import {anim as animate} from './animate';
+import {animate} from './animate';
 
 const updateState = (element, player) => {
   element.querySelector(`.player-status`).style.width =

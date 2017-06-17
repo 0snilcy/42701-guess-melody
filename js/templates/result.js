@@ -18,11 +18,10 @@ const getUserRating = (answers, time) => {
   return Math.round(((rating.length - position) / rating.length) * 100);
 };
 
-export default (...data) => {
-  console.log(data);
+export default (data, stats) => {
   const content = () => {
-    if (data) {
-      const {correctAnswers, time} = data;
+    if (stats) {
+      const {correctAnswers, time} = stats;
       return `
         <div class="main-stat">За&nbsp;2&nbsp;минуты<br>вы&nbsp;отгадали ${correctAnswers}&nbsp;мелодий</div>
         <span class="main-comparison">Это&nbsp;лучше чем у&nbsp;${getUserRating(correctAnswers, time)}%&nbsp;игроков</span>`;

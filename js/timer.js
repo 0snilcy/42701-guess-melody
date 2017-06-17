@@ -12,7 +12,7 @@
 // Длина шага = Длина окружности / Количество шагов
 // Пропуск = Длина шага * Номер шага
 
-import {anim as animate} from './animate';
+import {animate} from './animate';
 import formatTime from './time-format';
 
 let timerValue = 0;
