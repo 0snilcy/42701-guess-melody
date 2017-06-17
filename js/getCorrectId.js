@@ -9,4 +9,4 @@ export default (list) => {
     correct = i;
   } while (!list[i++].correct);
   return correct;
-}
+};

@@ -48,7 +48,7 @@ const redrawTimer = (timer, animation) => {
   return timer;
 };
 
-export const initTimer = (start = 0, ctx) => {
+export const initializeTimer = (start = 0, ctx) => {
   const element = ctx.querySelector(`.timer-line`);
   const radius = parseInt(element.getAttributeNS(null, `r`), 10);
   const timer = ctx.querySelector(`.timer-value`);
