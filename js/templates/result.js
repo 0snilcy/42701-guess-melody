@@ -8,14 +8,14 @@ import getElement from '../getElement';
 import {welcome as dataList} from './data';
 import rating from './model/rating';
 
-const getUserRating = (answers, time) => {
-  const item = {time, answers};
-  rating.push(item);
-  rating
+const getUserRating = (item) => {
+  const ratingList = rating.slice();
+  ratingList.push(item);
+  ratingList
     .sort((a, b) => a.time - b.time)
     .sort((a, b) => b.answers - a.answers);
-  const position = rating.indexOf(item) + 1;
-  return Math.round(((rating.length - position) / rating.length) * 100);
+  const position = ratingList.indexOf(item) + 1;
+  return Math.round(((ratingList.length - position) / ratingList.length) * 100);
 };
 
 export default (data, stats) => {
@@ -24,7 +24,7 @@ export default (data, stats) => {
       const {correctAnswers, time} = stats;
       return `
         <div class="main-stat">За&nbsp;2&nbsp;минуты<br>вы&nbsp;отгадали ${correctAnswers}&nbsp;мелодий</div>
-        <span class="main-comparison">Это&nbsp;лучше чем у&nbsp;${getUserRating(correctAnswers, time)}%&nbsp;игроков</span>`;
+        <span class="main-comparison">Это&nbsp;лучше чем у&nbsp;${getUserRating({correctAnswers, time})}%&nbsp;игроков</span>`;
     } else {
       return `<div class="main-stat">Ничего, вам повезет в следующий раз</div>`;
     }

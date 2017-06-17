@@ -7,11 +7,10 @@ import result from './result';
 import showScreen from '../showScreen';
 import getElement from '../getElement';
 import playerTemplate from './playerTemplate';
-import player from '../player';
+import initializePlayer from '../player';
 import {initTimer, getTimerValue} from '../timer';
 
 const {defeat, victory} = resultData;
-let dataList = [];
 
 const answer = (item, id) => `
   <div class="main-answer-wrapper">
@@ -24,13 +23,14 @@ const answer = (item, id) => `
 `;
 
 export const initialArtistTemplate = (data, state) => {
+  let dataList = [];
   for (let item of data) {
     dataList.push(item);
   }
-  return getArtistTemplate(state);
+  return getArtistTemplate(state, dataList);
 };
 
-const getArtistTemplate = ({lives, time, correctAnswers}) => {
+const getArtistTemplate = ({lives, time, correctAnswers}, dataList) => {
   const data = dataList.shift();
 
   const template = `
@@ -76,24 +76,24 @@ const getArtistTemplate = ({lives, time, correctAnswers}) => {
       // Правильный ли ответ
       if (id === correct) {
         ++correctAnswers;
-      } else {
-        if (--lives === 0) {
-          showScreen(result(defeat));
-          return;
-        }
+      } else if (--lives === 0) {
+        showScreen(result(defeat));
+        return;
       }
 
       // Есть ли еще вопросы
       if (dataList.length) {
         time = getTimerValue();
-        showScreen(getArtistTemplate({lives, time, correctAnswers}));
+        showScreen(getArtistTemplate(
+          {lives, time, correctAnswers}, dataList
+          ));
       } else {
         showScreen(result(victory, {lives, time, correctAnswers}));
       }
     });
   });
 
-  player(playerElement, data.track, domElement);
+  initializePlayer(playerElement, data.track, domElement);
   initTimer(time, domElement);
 
   return domElement;
