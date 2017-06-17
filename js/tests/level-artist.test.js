@@ -1,13 +1,18 @@
 /**
- * Created by zuoa on 15.06.2017.
+ * Created by zuoa on 09.06.2017.
  */
 
 import assert from 'assert';
+import getCorrectId from '../getCorrectId';
+import dataList from '../templates/model/level-artist-data';
 
-describe(`Array`, () => {
-  describe(`#indexOf()`, () => {
-    it(`should return -1 when the value is not present`, () => {
-      assert.equal(-1, [1, 2, 3].indexOf(4));
-    });
+const list = [...dataList];
+
+describe(`Экран определения артиста`, () => {
+  it(`Поиск корректного ответа`, () => {
+    assert.equal(getCorrectId(list[0].answers), 2);
+    assert.equal(getCorrectId(list[1].answers), 2);
+    assert.equal(getCorrectId(list[2].answers), 2);
+    assert.equal(getCorrectId(list[list.length - 1].answers), 0);
   });
 });

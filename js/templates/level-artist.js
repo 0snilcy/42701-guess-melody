@@ -8,7 +8,8 @@ import showScreen from '../showScreen';
 import getElement from '../getElement';
 import playerTemplate from './playerTemplate';
 import initializePlayer from '../player';
-import {initTimer, getTimerValue} from '../timer';
+import {initializeTimer, getTimerValue} from '../timer';
+import getCorrectId from '../getCorrectId';
 
 const {defeat, victory} = resultData;
 
@@ -63,12 +64,7 @@ const getArtistTemplate = ({lives, time, correctAnswers}, dataList) => {
   const domElement = getElement(template);
   const btnList = [...domElement.querySelectorAll(`.main-answer-r`)];
   const playerElement = domElement.querySelector(`.player-wrapper`);
-  let correct;
-  let i = 0;
-  do {
-    correct = i;
-  } while (!data.answers[i++].correct);
-
+  const correct = getCorrectId(data.answers);
 
   btnList.forEach((item, id) => {
     item.addEventListener(`click`, () => {
@@ -94,7 +90,7 @@ const getArtistTemplate = ({lives, time, correctAnswers}, dataList) => {
   });
 
   initializePlayer(playerElement, data.track, domElement);
-  initTimer(time, domElement);
+  initializeTimer(time, domElement);
 
   return domElement;
 };
