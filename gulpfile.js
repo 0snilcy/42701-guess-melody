@@ -17,10 +17,10 @@ const mocha = require(`gulp-mocha`); // Добавим установленны�
 
 gulp.task(`test`, function () {
   return gulp
-    .src([`js/**/*.test.js`], {read: false})
+    .src([`./js/tests/*.js`], {read: false})
     .pipe(mocha({
       compilers: [`js:babel-register`], // Включим поддержку "import/export" в Mocha тестах
-      reporter: `spec`       // Вид в котором я хочу отображать результаты тестирования
+      reporter: `nyan`       // Вид в котором я хочу отображать результаты тестирования
     }));
 });
 
@@ -48,15 +48,12 @@ gulp.task(`style`, function () {
 });
 
 gulp.task(`scripts`, function () {
-  return gulp.src(`js/**/*.js`)
+  return gulp.src([`js/**/*.js`, `!js/tests/*.js`])
     .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(rollup({}, `iife`))
     .pipe(sourcemaps.write(``))
     .pipe(gulp.dest(`build/js/`));
-});
-
-gulp.task(`test`, function () {
 });
 
 gulp.task(`imagemin`, [`copy`], function () {

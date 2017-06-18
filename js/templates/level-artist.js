@@ -2,11 +2,16 @@
  * Created by wakedafuckup on 28.05.17.
  */
 
-import nextScreen from './level-genre';
+import resultData from './model/result-data';
+import result from './result';
 import showScreen from '../showScreen';
 import getElement from '../getElement';
-import playerTemplate from './player';
-import {levelGenre as dataList} from './data';
+import playerTemplate from './playerTemplate';
+import initializePlayer from '../player';
+import {initializeTimer, getTimerValue} from '../timer';
+import getCorrectId from '../getCorrectId';
+
+const {defeat, victory} = resultData;
 
 const answer = (item, id) => `
   <div class="main-answer-wrapper">
@@ -18,7 +23,17 @@ const answer = (item, id) => `
   </div>
 `;
 
-export default (data) => {
+export const initialArtistTemplate = (data, state) => {
+  let dataList = [];
+  for (let item of data) {
+    dataList.push(item);
+  }
+  return getArtistTemplate(state, dataList);
+};
+
+const getArtistTemplate = ({lives, time, correctAnswers}, dataList) => {
+  const data = dataList.shift();
+
   const template = `
    <section class="main main--level main--level-artist">
     <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
@@ -35,7 +50,8 @@ export default (data) => {
 
     <div class="main-wrap">
       <div class="main-timer"></div>
-      <h2 class="title main-title">${data.title}</h2>
+      <h2 class="title title--life">Жизни: ${lives}</h2>
+      <h2 class="title main-title">Кто исполняет эту песню?</h2>
       <div class="player-wrapper"></div>
       <form class="main-list">
         ${data.answers.map(answer).join(``)}
@@ -47,14 +63,34 @@ export default (data) => {
 
   const domElement = getElement(template);
   const btnList = [...domElement.querySelectorAll(`.main-answer-r`)];
-  const player = domElement.querySelector(`.player-wrapper`);
+  const playerElement = domElement.querySelector(`.player-wrapper`);
+  const correct = getCorrectId(data.answers);
 
-  btnList.forEach((item) => {
+  btnList.forEach((item, id) => {
     item.addEventListener(`click`, () => {
-      showScreen(nextScreen(dataList));
+
+      // Правильный ли ответ
+      if (id === correct) {
+        ++correctAnswers;
+      } else if (--lives === 0) {
+        showScreen(result(defeat));
+        return;
+      }
+
+      // Есть ли еще вопросы
+      if (dataList.length) {
+        time = getTimerValue();
+        showScreen(getArtistTemplate(
+          {lives, time, correctAnswers}, dataList
+          ));
+      } else {
+        showScreen(result(victory, {lives, time, correctAnswers}));
+      }
     });
   });
-  window.initializePlayer(player, data.track, domElement);
+
+  initializePlayer(playerElement, data.track, domElement);
+  initializeTimer(time, domElement);
 
   return domElement;
 };

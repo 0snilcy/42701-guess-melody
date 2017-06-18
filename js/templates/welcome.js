@@ -2,10 +2,11 @@
  * Created by wakedafuckup on 28.05.17.
  */
 
-import nextScreen from './level-artist';
-import {levelArtist as dataList} from './data';
+import {initialArtistTemplate as nextScreen} from './level-artist';
 import showScreen from '../showScreen';
 import getElement from '../getElement';
+import dataList from './model/level-artist-data';
+import initialStats from './model/initial';
 
 export default (data) => {
   const template = `
@@ -18,9 +19,9 @@ export default (data) => {
 
   const domElement = getElement(template);
   const btn = domElement.querySelector(`.main-play`);
-  btn.addEventListener(`click`, () => showScreen(nextScreen(dataList)));
+  btn.addEventListener(`click`, () => {
+    showScreen(nextScreen(dataList, initialStats));
+  });
 
   return domElement;
 };
-
-
