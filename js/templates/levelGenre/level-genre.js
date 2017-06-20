@@ -4,9 +4,9 @@
 
 // import showScreen from '../showScreen';
 // import nextScreen from './result';
-import getElement from '../getElement';
-import playerTemplate from './playerTemplate';
-import player from '../player';
+import getElement from '../../getElement';
+import playerTemplate from '../utils/playerTemplate';
+import player from '../../tools/player';
 // import {result as dataList} from './data';
 
 const answerCreate = (elem, id) => `

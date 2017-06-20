@@ -3,7 +3,7 @@
  */
 
 import assert from 'assert';
-import getCorrectId from '../getCorrectId';
+import getCorrectId from '../templates/levelArtist/getCorrectId';
 import dataList from '../templates/model/level-artist-data';
 
 const list = [...dataList];

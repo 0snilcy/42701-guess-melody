@@ -1,5 +1,4 @@
-import showScreen from './showScreen';
-import welcome from './templates/welcome';
-import {welcome as dataList} from './templates/data';
+import welcome from './templates/welcome/controller';
+import showScreen from './tools/showScreen';
 
-showScreen(welcome(dataList));
+showScreen(welcome());

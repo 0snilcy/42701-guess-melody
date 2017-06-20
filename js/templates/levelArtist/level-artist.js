@@ -2,14 +2,14 @@
  * Created by wakedafuckup on 28.05.17.
  */
 
-import resultData from './model/result-data';
-import result from './result';
-import showScreen from '../showScreen';
-import getElement from '../getElement';
-import playerTemplate from './playerTemplate';
-import initializePlayer from '../player';
-import {initializeTimer, getTimerValue} from '../timer';
-import getCorrectId from '../getCorrectId';
+import resultData from '../result/result-data';
+import result from '../result/result';
+import showScreen from '../../tools/showScreen';
+import getElement from '../../getElement';
+import playerTemplate from '../utils/playerTemplate';
+import initializePlayer from '../../tools/player';
+import {initializeTimer, getTimerValue} from '../../tools/timer';
+import getCorrectId from './getCorrectId';
 
 const {defeat, victory} = resultData;
 
@@ -40,7 +40,7 @@ const getArtistTemplate = ({lives, time, correctAnswers}, dataList) => {
       <circle
         cx="390" cy="390" r="370"
         class="timer-line"
-        style="filter: url(.#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>
+        style="filter: url(../#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>
       <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">
         <span class="timer-value-mins">02</span><!--
         --><span class="timer-value-dots">:</span><!--
