@@ -12,14 +12,16 @@ export default () => {
   const listAnswers = [...data];
   const lastAnswer = listAnswers.length - 1;
   let currentAnswer = 0;
-  const view = new LevelArtist(listAnswers[currentAnswer], initial).getMarkup;
+  const view = new LevelArtist(listAnswers[currentAnswer], initial);
 
-  view.clickCorrect = () => {
+  view.clickCorrect = (stats) => {
     if (++currentAnswer < lastAnswer) {
-      view.rerender(listAnswers[currentAnswer]);
+      view.reRender(listAnswers[currentAnswer]);
+    } else {
+      showScreen(resultScreen(stats));
     }
   };
 
-  view.showResult = () => showScreen(resultScreen);
-  return view;
+  view.showResult = (stats) => showScreen(resultScreen(stats));
+  return view.getMarkup;
 };

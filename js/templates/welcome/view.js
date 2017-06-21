@@ -20,12 +20,13 @@ export default class extends AbstractView {
     </section>`;
   }
 
-  bind(ctx) {
-    const btn = ctx.querySelector(`.main-play`);
-    btn.addEventListener(`click`, () => this.btnEvent);
-  }
-
   btnEvent() {
 
+  }
+
+  bind(ctx) {
+    const btn = ctx.querySelector(`.main-play`);
+    btn.addEventListener(`click`, () => this.btnEvent());
+    return ctx;
   }
 }

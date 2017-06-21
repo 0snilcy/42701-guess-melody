@@ -5,5 +5,5 @@
 export default Object.freeze({
   lives: 3,
   correctAnswers: 0,
-  time: 0
+  time: 0,
 });

@@ -14,15 +14,15 @@ export default class AbstractView {
 
   // Возвращаем DOM элемент с событиями
   get element() {
-    this.markup = this.bind(this.render());
+    this.markup = this.bind(this.render);
     return this.markup;
   }
 
   // Создаем DOM эелемент
-  render() {
-    const container = document.createElement(`template`);
+  get render() {
+    const container = document.createElement(`div`);
     container.innerHTML = this.template;
-    return container.content;
+    return container.firstElementChild;
   }
 
   // Обработчики событий

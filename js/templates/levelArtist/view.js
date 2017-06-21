@@ -12,7 +12,7 @@ export default class extends AbstractView {
   constructor(renderItem, data) {
     super();
     this.renderItem = renderItem;
-    this.data = data;
+    this.data = Object.assign({}, data);
   }
 
   answer(item, id) {
@@ -50,12 +50,12 @@ export default class extends AbstractView {
           ${this.renderItem.answers.map(this.answer).join(``)}
         </form>
       </div>
-    </section>
-    ${playerTemplate()}`;
+      ${playerTemplate()}
+    </section>`;
   }
 
-  btnListBind(list) {
-    const btnList = [...this.murkup.querySelectorAll(`.main-answer-r`)];
+  btnListBind(ctx) {
+    const btnList = [...ctx.querySelectorAll(`.main-answer-r`)];
     const correct = getCorrectId(this.renderItem.answers);
 
     btnList.forEach((item, id) => {
@@ -77,20 +77,26 @@ export default class extends AbstractView {
 
   // Обработчики событий
   bind(ctx) {
-    this.btnListBind();
+    this.btnListBind(ctx);
     const playerElement = ctx.querySelector(`.player-wrapper`);
+
     initializePlayer(playerElement, this.renderItem.track, ctx);
     initializeTimer(this.data.time, ctx);
+
+    return ctx;
   }
 
-  static rerender(renderItem) {
+  reRender(renderItem) {
     this.renderItem = renderItem;
+
     const newAnswers = this.renderItem.answers.map(this.answer).join(``);
-    const container = this.murkup.querySelector(`.main-list`);
+    const container = this.markup.querySelector(`.main-list`);
     container.innerHTML = newAnswers;
-    const lifeContainer = this.murkup.querySelector(`.title--life`);
+
+    const lifeContainer = this.markup.querySelector(`.title--life`);
     lifeContainer.innerHTML = `Жизни: ${this.data.lives}`;
-    this.btnListBind();
+
+    this.btnListBind(this.markup);
   }
 
   clickCorrect() {
