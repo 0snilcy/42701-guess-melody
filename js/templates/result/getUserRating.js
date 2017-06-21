@@ -2,7 +2,7 @@
  * Created by wakedafuckup on 17.06.17.
  */
 
-import rating from './rating';
+import {rating} from './model';
 
 export default (item) => {
   const ratingList = rating.slice();
