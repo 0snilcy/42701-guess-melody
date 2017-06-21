@@ -9,6 +9,7 @@ import gameScreen from '../levelArtist/controller';
 
 export default () => {
   const view = new Welcome(data).getMarkup;
-  view.btnEvent = showScreen(gameScreen);
+  console.log(new Welcome(data).getMarkup);
+  // view.btnEvent = () => showScreen(gameScreen);
   return view;
 };

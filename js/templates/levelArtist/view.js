@@ -4,11 +4,15 @@
 
 import AbstractView from '../AbstractView';
 import playerTemplate from '../utils/playerTemplate';
+import getCorrectId from './getCorrectId';
+import initializePlayer from '../../tools/player';
+import {initializeTimer} from '../../tools/timer';
 
 export default class extends AbstractView {
-  constructor(renderItem) {
+  constructor(renderItem, data) {
     super();
     this.renderItem = renderItem;
+    this.data = data;
   }
 
   answer(item, id) {
@@ -39,7 +43,7 @@ export default class extends AbstractView {
       </svg>
         <div class="main-wrap">
         <div class="main-timer"></div>
-        <h2 class="title title--life">Жизни: ${lives}</h2>
+        <h2 class="title title--life">Жизни: ${this.data.lives}</h2>
         <h2 class="title main-title">Кто исполняет эту песню?</h2>
         <div class="player-wrapper"></div>
         <form class="main-list">
@@ -50,12 +54,46 @@ export default class extends AbstractView {
     ${playerTemplate()}`;
   }
 
-  // Обработчики событий
-  bind(ctx) {
-    ctx.addEventListener(`click`, (event) => event.preventDefault());
+  btnListBind(list) {
+    const btnList = [...this.murkup.querySelectorAll(`.main-answer-r`)];
+    const correct = getCorrectId(this.renderItem.answers);
+
+    btnList.forEach((item, id) => {
+      item.addEventListener(`click`, () => {
+
+        // Правильный ли ответ
+        if (id === correct) {
+          ++this.data.correctAnswers;
+        } else if (--this.data.lives === 0) {
+          this.showResult(this.data);
+          return;
+        }
+
+        this.clickCorrect(this.data);
+      });
+    });
+
   }
 
-  clickAnswer() {
+  // Обработчики событий
+  bind(ctx) {
+    this.btnListBind();
+    const playerElement = ctx.querySelector(`.player-wrapper`);
+    initializePlayer(playerElement, this.renderItem.track, ctx);
+    initializeTimer(this.data.time, ctx);
+  }
+
+  static rerender(renderItem) {
+    this.renderItem = renderItem;
+    const newAnswers = this.renderItem.answers.map(this.answer).join(``);
+    const container = this.murkup.querySelector(`.main-list`);
+    container.innerHTML = newAnswers;
+    const lifeContainer = this.murkup.querySelector(`.title--life`);
+    lifeContainer.innerHTML = `Жизни: ${this.data.lives}`;
+    this.btnListBind();
+  }
+
+  clickCorrect() {
 
   }
 

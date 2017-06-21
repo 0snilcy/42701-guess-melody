@@ -2,11 +2,6 @@
  * Created by wakedafuckup on 28.05.17.
  */
 
-import nextScreen from '../welcome';
-import showScreen from '../../tools/showScreen';
-import getElement from '../../getElement';
-import {welcome as dataList} from '../levelGenre/data';
-import getUserRating from './getUserRating';
 
 export default (data, stats) => {
   const content = () => {

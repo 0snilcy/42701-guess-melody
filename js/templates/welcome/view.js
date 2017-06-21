@@ -20,7 +20,7 @@ export default class extends AbstractView {
     </section>`;
   }
 
-  bind(ctx, callback) {
+  bind(ctx) {
     const btn = ctx.querySelector(`.main-play`);
     btn.addEventListener(`click`, () => this.btnEvent);
   }
