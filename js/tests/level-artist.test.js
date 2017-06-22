@@ -3,8 +3,8 @@
  */
 
 import assert from 'assert';
-import getCorrectId from '../getCorrectId';
-import dataList from '../templates/model/level-artist-data';
+import getCorrectId from '../templates/levelArtist/getCorrectId';
+import dataList from '../templates/levelArtist/model';
 
 const list = [...dataList];
 

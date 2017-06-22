@@ -3,7 +3,7 @@
  */
 
 import assert from 'assert';
-import getUserRating from '../getUserRating';
+import getUserRating from '../templates/result/getUserRating';
 
 describe(`Экран резултатов`, () => {
   it(`Проверка формирования рейтига`, () => {

@@ -15,11 +15,7 @@
 import {animate} from './animate';
 import formatTime from './time-format';
 
-let timerValue = 0;
-
-export const getTimerValue = () => {
-  return timerValue;
-};
+export let timerValue = 0;
 
 const redrawCircle = (circle, radius, animation) => {
   const length = 2 * Math.PI * radius;
@@ -52,6 +48,7 @@ export const initializeTimer = (start = 0, ctx) => {
   const element = ctx.querySelector(`.timer-line`);
   const radius = parseInt(element.getAttributeNS(null, `r`), 10);
   const timer = ctx.querySelector(`.timer-value`);
+  timerValue = start;
 
   animate.animate(animate.getAnimation(start, 1000, 120), (animation) => {
     redrawCircle(element, radius, animation);
