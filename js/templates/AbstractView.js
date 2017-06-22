@@ -3,32 +3,26 @@
  */
 
 export default class AbstractView {
-  constructor() {
+  constructor() {}
 
-  }
-
-  // Возврщаем разметку
   get template() {
     return `<template id="template"></template>`;
   }
 
-  // Возвращаем DOM элемент с событиями
   get element() {
-    this.markup = this.bind(this.render);
+    this.markup = this.render(this.template);
+    this.bind();
     return this.markup;
   }
 
-  // Создаем DOM эелемент
-  get render() {
+  render(string) {
     const container = document.createElement(`div`);
-    container.innerHTML = this.template;
+    container.innerHTML = string;
     return container.firstElementChild;
   }
 
-  // Обработчики событий
-  bind(ctx) {
-    ctx.addEventListener(`click`, (event) => event.preventDefault());
-    return ctx;
+  bind() {
+    this.markup.addEventListener(`click`, (event) => event.preventDefault());
   }
 
   get getMarkup() {

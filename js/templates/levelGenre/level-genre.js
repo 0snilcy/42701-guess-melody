@@ -6,7 +6,7 @@
 // import nextScreen from './result';
 import getElement from '../../getElement';
 import playerTemplate from '../utils/playerTemplate';
-import player from '../../tools/player';
+import player from '../utils/player';
 // import {result as dataList} from './data';
 
 const answerCreate = (elem, id) => `

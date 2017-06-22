@@ -5,7 +5,7 @@
 import AbstractView from '../AbstractView';
 import getUserRating from './getUserRating';
 
-export default class extends AbstractView {
+export class Result extends AbstractView {
   constructor(stats, data) {
     super();
     this.stats = stats;
@@ -14,7 +14,7 @@ export default class extends AbstractView {
   }
 
   get content() {
-    if (this.status) {
+    if (this.stats.lives) {
       return `
         <div class="main-stat">За&nbsp;2&nbsp;минуты<br>вы&nbsp;отгадали ${this.stats.correctAnswers}&nbsp;мелодий</div>
         <span class="main-comparison">Это&nbsp;лучше чем у&nbsp;${getUserRating(this.stats)}%&nbsp;игроков</span>`;
@@ -33,15 +33,10 @@ export default class extends AbstractView {
     </section>`;
   }
 
-  bind(ctx) {
-    const btn = ctx.querySelector(`.main-replay`);
-    btn.addEventListener(`click`, () => {
-      this.clickNewGame();
-    });
-    return ctx;
+  bind() {
+    const btn = this.markup.querySelector(`.main-replay`);
+    btn.addEventListener(`click`, () => this.clickNewGame());
   }
 
-  clickNewGame() {
-
-  }
+  clickNewGame() {}
 }

@@ -4,7 +4,7 @@
 
 import AbstractView from '../AbstractView';
 
-export default class extends AbstractView {
+export class Welcome extends AbstractView {
   constructor(data) {
     super();
     this.data = data;
@@ -20,13 +20,10 @@ export default class extends AbstractView {
     </section>`;
   }
 
-  btnEvent() {
-
-  }
-
-  bind(ctx) {
-    const btn = ctx.querySelector(`.main-play`);
+  bind() {
+    const btn = this.markup.querySelector(`.main-play`);
     btn.addEventListener(`click`, () => this.btnEvent());
-    return ctx;
   }
+
+  btnEvent() {}
 }

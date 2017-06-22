@@ -3,12 +3,13 @@
  */
 
 import AbstractView from '../AbstractView';
-import playerTemplate from '../utils/playerTemplate';
 import getCorrectId from './getCorrectId';
-import initializePlayer from '../../tools/player';
-import {initializeTimer} from '../../tools/timer';
+import playerTemplate from '../utils/playerTemplate';
+import initializePlayer from '../utils/player';
+import {initializeTimer, timerValue} from '../utils/timer';
+import templateTimer from '../utils/timerTemplate';
 
-export default class extends AbstractView {
+export class LevelArtist extends AbstractView {
   constructor(renderItem, data) {
     super();
     this.renderItem = renderItem;
@@ -27,20 +28,9 @@ export default class extends AbstractView {
     `;
   }
 
-  // Возврщаем разметку
   get template() {
     return `<section class="main main--level main--level-artist">
-      <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
-        <circle
-          cx="390" cy="390" r="370"
-          class="timer-line"
-          style="filter: url(../#blur); transform: rotate(-90deg) scaleY(-1); transform-origin: center"></circle>
-        <div class="timer-value" xmlns="http://www.w3.org/1999/xhtml">
-          <span class="timer-value-mins">02</span><!--
-          --><span class="timer-value-dots">:</span><!--
-          --><span class="timer-value-secs">00</span>
-        </div>
-      </svg>
+        ${templateTimer(timerValue)}
         <div class="main-wrap">
         <div class="main-timer"></div>
         <h2 class="title title--life">Жизни: ${this.data.lives}</h2>
@@ -54,14 +44,13 @@ export default class extends AbstractView {
     </section>`;
   }
 
-  btnListBind(ctx) {
-    const btnList = [...ctx.querySelectorAll(`.main-answer-r`)];
+  bind() {
+    const btnList = [...this.markup.querySelectorAll(`.main-answer-r`)];
     const correct = getCorrectId(this.renderItem.answers);
 
     btnList.forEach((item, id) => {
       item.addEventListener(`click`, () => {
 
-        // Правильный ли ответ
         if (id === correct) {
           ++this.data.correctAnswers;
         } else if (--this.data.lives === 0) {
@@ -73,37 +62,12 @@ export default class extends AbstractView {
       });
     });
 
+    const playerElement = this.markup.querySelector(`.player-wrapper`);
+
+    initializePlayer(playerElement, this.renderItem.track, this.markup);
+    initializeTimer(timerValue, this.markup);
   }
 
-  // Обработчики событий
-  bind(ctx) {
-    this.btnListBind(ctx);
-    const playerElement = ctx.querySelector(`.player-wrapper`);
-
-    initializePlayer(playerElement, this.renderItem.track, ctx);
-    initializeTimer(this.data.time, ctx);
-
-    return ctx;
-  }
-
-  reRender(renderItem) {
-    this.renderItem = renderItem;
-
-    const newAnswers = this.renderItem.answers.map(this.answer).join(``);
-    const container = this.markup.querySelector(`.main-list`);
-    container.innerHTML = newAnswers;
-
-    const lifeContainer = this.markup.querySelector(`.title--life`);
-    lifeContainer.innerHTML = `Жизни: ${this.data.lives}`;
-
-    this.btnListBind(this.markup);
-  }
-
-  clickCorrect() {
-
-  }
-
-  showResult() {
-
-  }
+  clickCorrect() {}
+  showResult() {}
 }
