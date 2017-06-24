@@ -1,4 +1,18 @@
-import welcome from './templates/welcome/controller';
-import showScreen from './tools/showScreen';
+/**
+ * Created by wakedafuckup on 24.06.17.
+ */
 
-showScreen(welcome());
+import welcome from './templates/welcome/controller';
+import {GameScreen} from './templates/gameScreen/gameScreen';
+
+export class Application {
+  static showWelcome() {
+    welcome();
+  }
+
+  static showGame() {
+    return new GameScreen().init();
+  }
+}
+
+Application.showWelcome();

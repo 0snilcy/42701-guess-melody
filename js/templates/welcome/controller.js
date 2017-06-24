@@ -4,11 +4,11 @@
 
 import {Welcome} from './view';
 import data from './model';
+import {Application} from '../../main';
 import showScreen from '../../tools/showScreen';
-import gameScreen from '../levelArtist/controller';
 
 export default () => {
   const view = new Welcome(data);
-  view.btnEvent = () => showScreen(gameScreen());
-  return view.getMarkup;
+  view.btnEvent = Application.showGame;
+  showScreen(view.getMarkup);
 };

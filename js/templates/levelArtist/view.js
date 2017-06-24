@@ -53,12 +53,13 @@ export class LevelArtist extends AbstractView {
 
         if (id === correct) {
           ++this.data.correctAnswers;
-        } else if (--this.data.lives === 0) {
-          this.showResult(this.data);
-          return;
+        } else {
+          --this.data.lives;
         }
 
-        this.clickCorrect(this.data);
+        this.data.time = timerValue;
+
+        this.onAnswer(this.data);
       });
     });
 
@@ -68,6 +69,5 @@ export class LevelArtist extends AbstractView {
     initializeTimer(timerValue, this.markup);
   }
 
-  clickCorrect() {}
-  showResult() {}
+  onAnswer() {}
 }
