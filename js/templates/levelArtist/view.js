@@ -9,7 +9,7 @@ import initializePlayer from '../utils/player';
 import {initializeTimer, timerValue} from '../utils/timer';
 import templateTimer from '../utils/timerTemplate';
 
-export class LevelArtist extends AbstractView {
+export class LevelView extends AbstractView {
   constructor(renderItem, data) {
     super();
     this.renderItem = renderItem;
@@ -59,7 +59,7 @@ export class LevelArtist extends AbstractView {
 
         this.data.time = timerValue;
 
-        this.onAnswer(this.data);
+        this.btnEvent(this.data);
       });
     });
 
