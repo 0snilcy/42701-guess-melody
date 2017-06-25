@@ -2,13 +2,18 @@
  * Created by zuoa on 20.06.2017.
  */
 
-import {Welcome} from './view';
+import {WelcomeView} from './view';
 import data from './model';
-import {Application} from '../../main';
 import showScreen from '../../tools/showScreen';
+import Application from '../../main';
 
-export default () => {
-  const view = new Welcome(data);
-  view.btnEvent = Application.showGame;
-  showScreen(view.getMarkup);
-};
+export class Welcome {
+  constructor() {
+    this.view = new WelcomeView(data);
+  }
+
+  init() {
+    this.view.btnEvent = () => Application.showGame();
+    showScreen(this.view.getMarkup);
+  }
+}

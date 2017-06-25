@@ -3,12 +3,9 @@
  */
 
 import {initial, Screen} from './model';
-import showScreen from '../../tools/showScreen';
-import {LevelArtist as LevelView} from '../levelArtist/view';
+import {Level} from '../levelArtist/controller';
 import questions from '../levelArtist/model';
-import {Result} from '../result/view';
-import {data as resultModel} from '../result/model';
-import {Application} from '../../main';
+import Application from '../../main';
 
 const getNextScreen = (data, current) => {
   const max = [...questions].length - 1;
@@ -29,28 +26,21 @@ export class GameScreen {
   }
 
   init() {
-    this.changeLevel(initial);
-  }
-
-  get view() {
-    return this._view;
-  }
-
-  set view(view) {
-    this._view = view;
-    showScreen(view.getMarkup);
+    this.changeLevel(Object.assign({}, initial));
   }
 
   changeLevel(state) {
     this.state = state;
-    this.view = new LevelView(this.listAnswers[this.currentAnswer++], this.state);
+    this.view = new Level(this.listAnswers[this.currentAnswer++], this.state);
 
     this.view.onAnswer = (stats) => {
       switch (getNextScreen(stats, this.currentAnswer)) {
         case Screen.DEFEAT:
+          Application.showResult();
+          break;
+
         case Screen.WIN:
-          this.view = new Result(stats, resultModel);
-          this.view.clickNewGame = () => Application.showWelcome();
+          Application.showResult(stats);
           break;
 
         case Screen.GAME:
