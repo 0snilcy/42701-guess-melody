@@ -44,13 +44,12 @@ const redrawTimer = (timer, animation) => {
   return timer;
 };
 
-export const initializeTimer = (start = 0, ctx) => {
+export const initializeTimer = (limit = 120, ctx) => {
   const element = ctx.querySelector(`.timer-line`);
   const radius = parseInt(element.getAttributeNS(null, `r`), 10);
   const timer = ctx.querySelector(`.timer-value`);
-  timerValue = start;
 
-  animate.animate(animate.getAnimation(start, 1000, 120), (animation) => {
+  animate.animate(animate.getAnimation(0, 1000, limit), (animation) => {
     redrawCircle(element, radius, animation);
     redrawTimer(timer, animation);
     timerValue++;
