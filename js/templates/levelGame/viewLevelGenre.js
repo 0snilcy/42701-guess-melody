@@ -3,24 +3,30 @@
  */
 
 import AbstractView from '../AbstractView';
-import getCorrectId from './getCorrectId';
 import playerTemplate from '../utils/playerTemplate';
 import initializePlayer from '../utils/player';
-import {initializeTimer, timerValue} from '../utils/timer';
-import templateTimer from '../utils/timerTemplate';
+
+const getCorrectList = (list, correct) => {
+  return list.filter((item) => item.genre === correct).length;
+};
+
+const checkAllRight = (list, correct) => {
+  return list.every((item) => item.value === correct);
+};
 
 export class LevelGenre extends AbstractView {
   constructor(screenData, state) {
     super();
     this.screenData = screenData;
     this.state = Object.assign({}, state);
+    this.correctItems = getCorrectList(this.screenData.answers, this.screenData.genre);
   }
 
   answer(item, id) {
     return `
       <div class="genre-answer">
-        <div class="player-wrapper" data-src="${item.src}"></div>
-        <input type="checkbox" name="answer" value="answer-${id + 1}" id="a-${id + 1}">
+        <div class="player-wrapper"></div>
+        <input type="checkbox" name="answer" value="${item.genre}" id="a-${id + 1}">
         <label class="genre-answer-check" for="a-${id + 1}"></label>
       </div>`;
   }
@@ -33,33 +39,39 @@ export class LevelGenre extends AbstractView {
         ${this.screenData.answers.map(this.answer).join(``)}
         <button class="genre-answer-send" type="submit">Ответить</button>
       </form>
+      ${playerTemplate()}
     </section>
-    ${playerTemplate()}`;
+    `;
   }
 
   bind() {
-    const btnList = [...this.markup.querySelectorAll(`.main-answer-r`)];
-    const correct = getCorrectId(this.screenData.answers);
-
-    btnList.forEach((item, id) => {
+    const inputList = [...this.markup.querySelectorAll(`.genre-answer input[name=answer]`)];
+    inputList.forEach((item) => {
       item.addEventListener(`click`, () => {
-
-        if (id === correct) {
-          ++this.state.correctAnswers;
-        } else {
-          --this.state.lives;
-        }
-
-        this.state.time = timerValue;
-
-        this.btnEvent(this.state);
+        btnSend.disabled = !inputList.some((input) => input.checked);
       });
     });
 
-    const playerElement = this.markup.querySelector(`.player-wrapper`);
+    const btnSend = this.markup.querySelector(`.genre-answer-send`);
+    btnSend.disabled = true;
+    btnSend.addEventListener(`click`, (event) => {
+      event.preventDefault();
 
-    initializePlayer(playerElement, this.screenData.track, this.markup);
-    initializeTimer(timerValue, this.markup);
+      const checked = inputList.filter((item) => item.checked);
+
+      if (checked.length === this.correctItems && checkAllRight(checked, this.screenData.genre)) {
+        ++this.state.correctAnswers;
+      } else {
+        --this.state.lives;
+      }
+
+      this.btnEvent(this.state);
+
+      return false;
+    });
+
+    const players = [...this.markup.querySelectorAll(`.player-wrapper`)];
+    players.forEach((item, id) => initializePlayer(item, this.screenData.answers[id].src, this.markup));
   }
 
   onAnswer() {}

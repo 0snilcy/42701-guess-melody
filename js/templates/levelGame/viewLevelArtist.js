@@ -6,8 +6,6 @@ import AbstractView from '../AbstractView';
 import getCorrectId from './getCorrectId';
 import playerTemplate from '../utils/playerTemplate';
 import initializePlayer from '../utils/player';
-import {initializeTimer, timerValue} from '../utils/timer';
-import templateTimer from '../utils/timerTemplate';
 
 export class LevelArtist extends AbstractView {
   constructor(screenData, state) {
@@ -30,7 +28,6 @@ export class LevelArtist extends AbstractView {
 
   get template() {
     return `<section class="main main--level main--level-artist">
-        ${templateTimer(timerValue)}
         <div class="main-wrap">
         <div class="main-timer"></div>
         <h2 class="title title--life">Жизни: ${this.state.lives}</h2>
@@ -57,8 +54,6 @@ export class LevelArtist extends AbstractView {
           --this.state.lives;
         }
 
-        this.state.time = timerValue;
-
         this.btnEvent(this.state);
       });
     });
@@ -66,7 +61,7 @@ export class LevelArtist extends AbstractView {
     const playerElement = this.markup.querySelector(`.player-wrapper`);
 
     initializePlayer(playerElement, this.screenData.src, this.markup);
-    initializeTimer(timerValue, this.markup);
+    // initializeTimer(timerValue, this.markup);
   }
 
   onAnswer() {}

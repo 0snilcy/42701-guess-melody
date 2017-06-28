@@ -21,7 +21,6 @@ const getNextScreen = (data, current) => {
 
 export class GameScreen {
   constructor(data) {
-    console.log(data);
     this.dataGame = data;
     this.currentScreen = 0;
   }
