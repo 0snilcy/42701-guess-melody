@@ -3,8 +3,8 @@
  */
 
 import {initial, Screen} from './model';
-import {Level} from '../levelArtist/controller';
-import questions from '../levelArtist/model';
+import {Level} from '../levelGame/controller';
+import questions from '../levelGame/model';
 import Application from '../../main';
 
 const getNextScreen = (data, current) => {
@@ -20,9 +20,10 @@ const getNextScreen = (data, current) => {
 };
 
 export class GameScreen {
-  constructor() {
-    this.listAnswers = [...questions];
-    this.currentAnswer = 0;
+  constructor(data) {
+    console.log(data);
+    this.dataGame = data;
+    this.currentScreen = 0;
   }
 
   init() {
@@ -31,10 +32,10 @@ export class GameScreen {
 
   changeLevel(state) {
     this.state = state;
-    this.view = new Level(this.listAnswers[this.currentAnswer++], this.state);
+    this.view = new Level(this.dataGame[this.currentScreen++], this.state);
 
     this.view.onAnswer = (stats) => {
-      switch (getNextScreen(stats, this.currentAnswer)) {
+      switch (getNextScreen(stats, this.currentScreen)) {
         case Screen.DEFEAT:
           Application.showResult();
           break;
