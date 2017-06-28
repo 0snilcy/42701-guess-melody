@@ -6,6 +6,7 @@ import {Welcome} from './templates/welcome/controller';
 import {GameScreen} from './templates/gameScreen/gameScreen';
 import {Result} from './templates/result/controller';
 import statsFormat from './tools/statsFormat';
+import BaseModel from './tools/baseModel';
 
 const ControllerID = {
   WELCOME: ``,
@@ -15,9 +16,21 @@ const ControllerID = {
 
 class Application {
   constructor() {
+    this.model = new class extends BaseModel {
+      get urlRead() {
+        return `https://intensive-ecmascript-server-btfgudlkpi.now.sh/guess-melody/questions`;
+      }
+    }();
+
+    this.model.load()
+      .then((data) => this.setup(data))
+      .then(() => this.changeController());
+  }
+
+  setup(data) {
     this.routes = {
       [ControllerID.WELCOME]: new Welcome(),
-      [ControllerID.GAME]: new GameScreen(),
+      [ControllerID.GAME]: new GameScreen(data),
       [ControllerID.STATS]: new Result(),
 
     };
@@ -25,7 +38,8 @@ class Application {
     window.onhashchange = () => {
       this.changeController();
     };
-    this.changeController();
+
+    return data;
   }
 
   changeController() {

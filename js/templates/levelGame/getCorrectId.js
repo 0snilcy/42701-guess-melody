@@ -7,6 +7,6 @@ export default (list) => {
   let i = 0;
   do {
     correct = i;
-  } while (!list[i++].correct);
+  } while (!list[i++].isCorrect);
   return correct;
 };
