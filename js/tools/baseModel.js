@@ -21,7 +21,7 @@ export default class BaseModel {
 
   send(data, adapter = defaultAdapter) {
     const settings = {
-      body: adapter.toServer(data),
+      body: JSON.stringify(adapter.toServer(data)),
       headers: {
         'Content-Type': `application/json`
       },
@@ -29,5 +29,9 @@ export default class BaseModel {
     };
 
     return fetch(this.urlWrite, settings);
+  }
+
+  formatToServer(data) {
+    return defaultAdapter.toServer(data);
   }
 }
