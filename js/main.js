@@ -24,7 +24,8 @@ class Application {
 
     this.model.load()
       .then((data) => this.setup(data))
-      .then(() => this.changeController());
+      .then(() => this.changeController())
+      .catch(window.console.error);;
   }
 
   setup(data) {
@@ -62,7 +63,6 @@ class Application {
   showGame() {
     location.hash = ControllerID.GAME;
   }
-
 
   showResult(stats) {
     if (stats) {

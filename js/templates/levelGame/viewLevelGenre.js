@@ -34,6 +34,7 @@ export class LevelGenre extends AbstractView {
   get template() {
     return `
     <section class="main main--level main--level-genre">
+      <h2 class="title title--life">Жизни: ${this.state.lives}</h2>
       <h2 class="title">${this.screenData.question}</h2>
       <form class="genre">
         ${this.screenData.answers.map(this.answer).join(``)}

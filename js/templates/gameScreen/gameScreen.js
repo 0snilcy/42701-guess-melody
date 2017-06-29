@@ -30,25 +30,21 @@ export class GameScreen {
   }
 
   changeLevel(state) {
-    this.state = state;
-    this.view = new Level(this.dataGame[this.currentScreen++], this.state);
+    this.view = new Level(this.dataGame[this.currentScreen++], state);
 
-    this.view.onAnswer = (stats) => {
-      switch (getNextScreen(stats, this.currentScreen)) {
+    this.view.onAnswer = (nextState) => {
+      switch (getNextScreen(nextState, this.currentScreen)) {
         case Screen.DEFEAT:
-          Application.showResult();
-          break;
-
         case Screen.WIN:
-          Application.showResult(stats);
+          Application.showResult(nextState);
           break;
 
         case Screen.GAME:
-          this.changeLevel(stats);
+          this.changeLevel(nextState);
           break;
 
         default:
-          throw new Error(`Unknown result ${stats}`);
+          throw new Error(`Unknown result ${nextState}`);
       }
     };
   }
