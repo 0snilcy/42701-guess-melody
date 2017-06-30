@@ -61,7 +61,6 @@ export class LevelArtist extends AbstractView {
     const playerElement = this.markup.querySelector(`.player-wrapper`);
 
     initializePlayer(playerElement, this.screenData.src, this.markup);
-    // initializeTimer(timerValue, this.markup);
   }
 
   onAnswer() {}

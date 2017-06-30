@@ -14,8 +14,7 @@
 
 import {animate} from './animate';
 import formatTime from './time-format';
-
-export let timerValue = 0;
+import template from './timerTemplate';
 
 const redrawCircle = (circle, radius, animation) => {
   const length = 2 * Math.PI * radius;
@@ -29,9 +28,7 @@ const redrawCircle = (circle, radius, animation) => {
   return circle;
 };
 
-
 const addLeadingZero = (val) => val < 10 ? `0${val}` : val;
-
 
 const redrawTimer = (timer, animation) => {
   const total = animation.stepDuration * animation.steps;
@@ -44,14 +41,30 @@ const redrawTimer = (timer, animation) => {
   return timer;
 };
 
-export const initializeTimer = (limit = 120, ctx) => {
-  const element = ctx.querySelector(`.timer-line`);
-  const radius = parseInt(element.getAttributeNS(null, `r`), 10);
-  const timer = ctx.querySelector(`.timer-value`);
+export default (function () {
+  return {
+    init(limit = 120) {
+      const ctx = document.createElement(`div`);
+      ctx.innerHTML = template();
+      const element = ctx.querySelector(`.timer-line`);
+      const radius = parseInt(element.getAttributeNS(null, `r`), 10);
+      const timer = ctx.querySelector(`.timer-value`);
 
-  animate.animate(animate.getAnimation(0, 1000, limit), (animation) => {
-    redrawCircle(element, radius, animation);
-    redrawTimer(timer, animation);
-    timerValue++;
-  }, () => timer.classList.add(`timer-value--finished`));
-};
+      animate.animate(animate.getAnimation(0, 1000, limit), (animation) => {
+        redrawCircle(element, radius, animation);
+        redrawTimer(timer, animation);
+      }, () => timer.classList.add(`timer-value--finished`));
+
+      document.querySelector(`.app`).appendChild(ctx);
+    },
+
+    remove() {
+      const item = document.querySelector(`.timer`);
+      item.parentNode.remove();
+    },
+
+    value() {
+
+    }
+  };
+})();
