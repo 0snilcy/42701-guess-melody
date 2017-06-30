@@ -3,6 +3,7 @@
  */
 
 import {WelcomeView} from './view';
+import {PreloaderView} from './preloaderView';
 import data from './model';
 import showScreen from '../../tools/showScreen';
 import Application from '../../main';
@@ -10,6 +11,10 @@ import Application from '../../main';
 export class Welcome {
   constructor() {
     this.view = new WelcomeView(data);
+  }
+
+  static preloader() {
+    showScreen(new PreloaderView(data).getMarkup);
   }
 
   init() {

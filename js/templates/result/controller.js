@@ -12,7 +12,7 @@ import getUserRating from './getUserRating';
 
 export class Result {
   init(stats) {
-    if (stats.lives) {
+    if (stats && stats.lives) {
       this.model = new class extends BaseModel {
         get urlRead() {
           return `https://intensive-ecmascript-server-btfgudlkpi.now.sh/guess-melody/stats/42701`;

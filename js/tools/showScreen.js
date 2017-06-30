@@ -4,6 +4,6 @@
 const app = document.querySelector(`.app`);
 
 export default (template) => {
-  app.innerHTML = ``;
-  app.appendChild(template);
+  const oldItem = app.querySelector(`.main`);
+  app.replaceChild(template, oldItem);
 };

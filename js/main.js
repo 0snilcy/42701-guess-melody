@@ -8,6 +8,7 @@ import {Result} from './templates/result/controller';
 import statsFormat from './tools/statsFormat';
 import BaseModel from './tools/baseModel';
 
+
 const ControllerID = {
   WELCOME: ``,
   GAME: `game`,
@@ -16,6 +17,8 @@ const ControllerID = {
 
 class Application {
   constructor() {
+    Welcome.preloader();
+
     this.model = new class extends BaseModel {
       get urlRead() {
         return `https://intensive-ecmascript-server-btfgudlkpi.now.sh/guess-melody/questions`;
@@ -25,7 +28,7 @@ class Application {
     this.model.load()
       .then((data) => this.setup(data))
       .then(() => this.changeController())
-      .catch(window.console.error);;
+      .catch(window.console.error);
   }
 
   setup(data) {
