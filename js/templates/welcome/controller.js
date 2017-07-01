@@ -18,7 +18,9 @@ export class Welcome {
   }
 
   init() {
-    this.view.btnEvent = () => Application.showGame();
+    this.view.btnEvent = () => {
+      Application.showGame();
+    };
     showScreen(this.view.getMarkup);
   }
 }

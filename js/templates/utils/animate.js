@@ -17,7 +17,9 @@ export const animate = {
       }
     }, animation.stepDuration);
 
-    const stopFn = () => clearInterval(interval);
+    const stopFn = () => {
+      clearInterval(interval);
+    };
 
     return stopFn;
   }

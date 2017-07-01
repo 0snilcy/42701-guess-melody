@@ -15,7 +15,9 @@ export default class BaseModel {
 
   load(adapter = defaultAdapter) {
     return fetch(this.urlRead)
-      .then((resp) => resp.json())
+      .then((resp) => {
+        return resp.json();
+      })
       .then(adapter.preprocess);
   }
 

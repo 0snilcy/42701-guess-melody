@@ -7,11 +7,15 @@ import playerTemplate from '../utils/playerTemplate';
 import initializePlayer from '../utils/player';
 
 const getCorrectList = (list, correct) => {
-  return list.filter((item) => item.genre === correct).length;
+  return list.filter((item) => {
+    return item.genre === correct;
+  }).length;
 };
 
 const checkAllRight = (list, correct) => {
-  return list.every((item) => item.value === correct);
+  return list.every((item) => {
+    return item.value === correct;
+  });
 };
 
 export class LevelGenre extends AbstractView {
@@ -23,33 +27,32 @@ export class LevelGenre extends AbstractView {
   }
 
   answer(item, id) {
-    return `
-      <div class="genre-answer">
-        <div class="player-wrapper"></div>
-        <input type="checkbox" name="answer" value="${item.genre}" id="a-${id + 1}">
-        <label class="genre-answer-check" for="a-${id + 1}"></label>
-      </div>`;
+    return `<div class="genre-answer">
+              <div class="player-wrapper"></div>
+              <input type="checkbox" name="answer" value="${item.genre}" id="a-${id + 1}">
+              <label class="genre-answer-check" for="a-${id + 1}"></label>
+            </div>`;
   }
 
   get template() {
-    return `
-    <section class="main main--level main--level-genre">
-      <h2 class="title title--life">Жизни: ${this.state.lives}</h2>
-      <h2 class="title">${this.screenData.question}</h2>
-      <form class="genre">
-        ${this.screenData.answers.map(this.answer).join(``)}
-        <button class="genre-answer-send" type="submit">Ответить</button>
-      </form>
-      ${playerTemplate()}
-    </section>
-    `;
+    return `<section class="main main--level main--level-genre">
+              <h2 class="title title--life">Жизни: ${this.state.lives}</h2>
+              <h2 class="title">${this.screenData.question}</h2>
+              <form class="genre">    
+                ${this.screenData.answers.map(this.answer).join(``)}
+                <button class="genre-answer-send" type="submit">Ответить</button>
+              </form>
+              ${playerTemplate()}
+            </section>`;
   }
 
   bind() {
     const inputList = [...this.markup.querySelectorAll(`.genre-answer input[name=answer]`)];
     inputList.forEach((item) => {
       item.addEventListener(`click`, () => {
-        btnSend.disabled = !inputList.some((input) => input.checked);
+        btnSend.disabled = !inputList.some((input) => {
+          return input.checked;
+        });
       });
     });
 
@@ -58,7 +61,9 @@ export class LevelGenre extends AbstractView {
     btnSend.addEventListener(`click`, (event) => {
       event.preventDefault();
 
-      const checked = inputList.filter((item) => item.checked);
+      const checked = inputList.filter((item) => {
+        return item.checked;
+      });
 
       if (checked.length === this.correctItems && checkAllRight(checked, this.screenData.genre)) {
         ++this.state.correctAnswers;
@@ -72,8 +77,10 @@ export class LevelGenre extends AbstractView {
     });
 
     const players = [...this.markup.querySelectorAll(`.player-wrapper`)];
-    players.forEach((item, id) => initializePlayer(item, this.screenData.answers[id].src, this.markup));
+    players.forEach((item, id) => {
+      return initializePlayer(item, this.screenData.answers[id].src, this.markup);
+    });
   }
 
-  onAnswer() {}
+  btnEvent() {}
 }

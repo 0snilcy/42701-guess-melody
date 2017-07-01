@@ -16,7 +16,9 @@ const switchState = (state, player, element) => {
     player.play();
     state.stopAnimation = animate.animate(
         animate.getAnimation(player.currentTime, 1000, player.duration),
-        (animation) => updateState(element, player));
+        (animation) => {
+          return updateState(element, player);
+        });
   } else {
     player.pause();
     state.stopAnimation();
@@ -45,7 +47,7 @@ const destroyPlayer = (element, state) => {
 
 
 export default (element, file, ctx, autoplay = false, controllable = true) => {
-  let state = {};
+  const state = {};
 
   const content = ctx.querySelector(`#templates`)
     .content
@@ -56,7 +58,9 @@ export default (element, file, ctx, autoplay = false, controllable = true) => {
 
   player.onloadeddata = () => {
     if (controllable) {
-      button.onclick = () => switchState(state, player, content);
+      button.onclick = () => {
+        return switchState(state, player, content);
+      };
     }
 
     if (autoplay) {
@@ -68,5 +72,7 @@ export default (element, file, ctx, autoplay = false, controllable = true) => {
   element.appendChild(content);
   element.classList.toggle(`player--no-controls`, !controllable);
 
-  return () => destroyPlayer(element, state);
+  return () => {
+    return destroyPlayer(element, state);
+  };
 };

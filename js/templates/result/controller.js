@@ -28,15 +28,21 @@ export class Result {
           const rating = getUserRating(formatStats, serverStats);
 
           this.view = new VictoryView(data.victory, stats.correctAnswers, rating);
-          this.view.btnEvent = () => Application.showWelcome();
+          this.view.btnEvent = () => {
+            Application.showWelcome();
+          };
           showScreen(this.view.getMarkup);
 
         })
-        .then(() => this.model.send(stats))
+        .then(() => {
+          return this.model.send(stats);
+        })
         .catch(window.console.error);
     } else {
       this.view = new DefeatView(data.defeat);
-      this.view.btnEvent = () => Application.showWelcome();
+      this.view.btnEvent = () => {
+        Application.showWelcome();
+      };
       showScreen(this.view.getMarkup);
     }
   }
