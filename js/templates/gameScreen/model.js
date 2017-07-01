@@ -6,8 +6,8 @@ export const initial = Object.freeze({
   lives: 3,
   correctAnswers: 0,
   time: 0,
-  gameLimit: 120000,
-  levelLimit: 30000
+  gameLimit: 120,
+  levelLimit: 30
 });
 
 export const Screen = Object.freeze({
