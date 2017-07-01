@@ -23,18 +23,19 @@ const getNextScreen = (data, current) => {
 export class GameScreen {
   constructor(data) {
     this.dataGame = data;
-    this.currentScreen = 0;
-    this.timerValue = 0;
   }
 
   init() {
+    this.currentScreen = 0;
+    this.timerValue = 0;
+
     this.changeLevel(Object.assign({}, initial));
-    timer.init(this.gameTimer);
+    timer.init(initial.gameLimit);
 
     this.gameTimer = setTimeout(() => {
       timer.remove();
       Application.showResult();
-    }, initial.gameLimit);
+    }, initial.gameLimit * 1000);
 
     this.setTimverHundler = setInterval(() => {
       this.timerValue++;
@@ -69,6 +70,6 @@ export class GameScreen {
     this.levelTimer = setTimeout(() => {
       timer.remove();
       Application.showResult();
-    }, initial.levelLimit);
+    }, initial.levelLimit * 1000);
   }
 }
