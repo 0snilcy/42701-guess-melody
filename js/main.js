@@ -26,8 +26,12 @@ class Application {
     }();
 
     this.model.load()
-      .then((data) => this.setup(data))
-      .then(() => this.changeController())
+      .then((data) => {
+        this.setup(data);
+      })
+      .then(() => {
+        this.changeController();
+      })
       .catch(window.console.error);
   }
 

@@ -11,13 +11,12 @@ export class WelcomeView extends AbstractView {
   }
 
   get template() {
-    return `
-    <section class="main main--welcome">
-      <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
-      <button class="main-play">data.title</button>
-      <h2 class="title main-title">${this.data.title}</h2>
-      <p class="text main-text">${this.data.subtitle}</p>
-    </section>`;
+    return `<section class="main main--welcome">
+              <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
+              <button class="main-play"></button>
+              <h2 class="title main-title">${this.data.title}</h2>
+              <p class="text main-text">${this.data.subtitle}</p>
+            </section>`;
   }
 
   bind() {

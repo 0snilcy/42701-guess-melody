@@ -36,7 +36,9 @@ export class GameScreen {
       Application.showResult();
     }, initial.gameLimit);
 
-    this.setTimverHundler = setInterval(() => this.timerValue++, 1000);
+    this.setTimverHundler = setInterval(() => {
+      this.timerValue++;
+    }, 1000);
   }
 
   changeLevel(state) {
