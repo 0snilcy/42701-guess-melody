@@ -27,7 +27,7 @@ class Application {
 
     this.model.load()
       .then((data) => {
-        this.setup(data);
+        this._setup(data);
       })
       .then(() => {
         this.changeController();
@@ -35,7 +35,7 @@ class Application {
       .catch(window.console.error);
   }
 
-  setup(data) {
+  _setup(data) {
     this.routes = {
       [ControllerID.WELCOME]: new Welcome(),
       [ControllerID.GAME]: new GameScreen(data),

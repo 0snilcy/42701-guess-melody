@@ -15,6 +15,10 @@ export default class AbstractView {
     return this.markup;
   }
 
+  get getMarkup() {
+    return this.markup ? this.markup : this.element;
+  }
+
   render(string) {
     const container = document.createElement(`div`);
     container.innerHTML = string;
@@ -23,9 +27,5 @@ export default class AbstractView {
 
   bind() {
     this.markup.addEventListener(`click`, (event) => event.preventDefault());
-  }
-
-  get getMarkup() {
-    return this.markup ? this.markup : this.element;
   }
 }

@@ -13,14 +13,14 @@ export class Welcome {
     this.view = new WelcomeView(data);
   }
 
-  static preloader() {
-    showScreen(new PreloaderView(data).getMarkup);
-  }
-
   init() {
     this.view.btnEvent = () => {
       Application.showGame();
     };
     showScreen(this.view.getMarkup);
+  }
+
+  static preloader() {
+    showScreen(new PreloaderView(data).getMarkup);
   }
 }

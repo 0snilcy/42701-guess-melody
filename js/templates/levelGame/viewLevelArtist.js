@@ -14,16 +14,6 @@ export class LevelArtist extends AbstractView {
     this.state = Object.assign({}, state);
   }
 
-  answer(item, id) {
-    return `<div class="main-answer-wrapper">
-              <input class="main-answer-r" type="radio" id="answer-${id + 1}" name="answer" value="${id + 1}" />
-              <label class="main-answer" for="answer-${id + 1}">
-                <img class="main-answer-preview" src="${item.image.url}" width="${item.image.width}" height="${item.image.height}">
-                ${item.title}
-              </label>
-            </div>`;
-  }
-
   get template() {
     return `<section class="main main--level main--level-artist">
               <div class="main-wrap">
@@ -32,11 +22,21 @@ export class LevelArtist extends AbstractView {
                 <h2 class="title main-title">${this.screenData.question}</h2>
                 <div class="player-wrapper"></div>
                 <form class="main-list">
-                  ${this.screenData.answers.map(this.answer).join(``)}
+                  ${this.screenData.answers.map(this._answer).join(``)}
                 </form>
               </div>
               ${playerTemplate()}
             </section>`;
+  }
+
+  _answer(item, id) {
+    return `<div class="main-answer-wrapper">
+              <input class="main-answer-r" type="radio" id="answer-${id + 1}" name="answer" value="${id + 1}" />
+              <label class="main-answer" for="answer-${id + 1}">
+                <img class="main-answer-preview" src="${item.image.url}" width="${item.image.width}" height="${item.image.height}">
+                ${item.title}
+              </label>
+            </div>`;
   }
 
   bind() {
@@ -58,7 +58,7 @@ export class LevelArtist extends AbstractView {
 
     const playerElement = this.markup.querySelector(`.player-wrapper`);
 
-    initializePlayer(playerElement, this.screenData.src, this.markup);
+    initializePlayer(playerElement, this.screenData.src, this.markup, true);
   }
 
   btnEvent() {}

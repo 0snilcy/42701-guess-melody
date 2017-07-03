@@ -4,13 +4,10 @@
 
 import {initial, Screen} from './model';
 import {Level} from '../levelGame/controller';
-import questions from '../levelGame/model';
 import Application from '../../main';
 import timer from '../utils/timer';
 
-const getNextScreen = (data, current) => {
-  const max = [...questions].length - 1;
-
+const getNextScreen = (data, current, max) => {
   if (!data.lives) {
     return Screen.DEFEAT;
   } else if (current > max) {
@@ -23,6 +20,7 @@ const getNextScreen = (data, current) => {
 export class GameScreen {
   constructor(data) {
     this.dataGame = data;
+    this.dataGameMax = this.dataGame.length - 1;
   }
 
   init() {
@@ -37,7 +35,7 @@ export class GameScreen {
       Application.showResult();
     }, initial.gameLimit * 1000);
 
-    this.setTimverHundler = setInterval(() => {
+    this.setTimerGame = setInterval(() => {
       this.timerValue++;
     }, 1000);
   }
@@ -46,12 +44,12 @@ export class GameScreen {
     this.view = new Level(this.dataGame[this.currentScreen++], state);
 
     this.view.onAnswer = (nextState) => {
-      switch (getNextScreen(nextState, this.currentScreen)) {
+      switch (getNextScreen(nextState, this.currentScreen, this.dataGameMax)) {
         case Screen.DEFEAT:
         case Screen.WIN:
           clearTimeout(this.gameTimer);
           clearTimeout(this.levelTimer);
-          clearInterval(this.setTimverHundler);
+          clearInterval(this.setTimerGame);
           nextState.time = this.timerValue;
           timer.remove();
           Application.showResult(nextState);

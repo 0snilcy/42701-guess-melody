@@ -28,11 +28,7 @@ export class Result {
           const rating = getUserRating(formatStats, serverStats);
 
           this.view = new VictoryView(data.victory, stats.correctAnswers, rating);
-          this.view.btnEvent = () => {
-            Application.showWelcome();
-          };
-          showScreen(this.view.getMarkup);
-
+          this._setEvent(this.view);
         })
         .then(() => {
           return this.model.send(stats);
@@ -40,10 +36,14 @@ export class Result {
         .catch(window.console.error);
     } else {
       this.view = new DefeatView(data.defeat);
-      this.view.btnEvent = () => {
-        Application.showWelcome();
-      };
-      showScreen(this.view.getMarkup);
+      this._setEvent(this.view);
     }
+  }
+
+  _setEvent(ctx) {
+    ctx.btnEvent = () => {
+      Application.showWelcome();
+    };
+    showScreen(ctx.getMarkup);
   }
 }

@@ -3,10 +3,7 @@
  */
 
 export default (list) => {
-  let correct;
-  let i = 0;
-  do {
-    correct = i;
-  } while (!list[i++].isCorrect);
-  return correct;
+  return list.findIndex((item) => {
+    return item.isCorrect;
+  });
 };

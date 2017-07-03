@@ -6,32 +6,11 @@ import AbstractView from '../AbstractView';
 import playerTemplate from '../utils/playerTemplate';
 import initializePlayer from '../utils/player';
 
-const getCorrectList = (list, correct) => {
-  return list.filter((item) => {
-    return item.genre === correct;
-  }).length;
-};
-
-const checkAllRight = (list, correct) => {
-  return list.every((item) => {
-    return item.value === correct;
-  });
-};
-
 export class LevelGenre extends AbstractView {
   constructor(screenData, state) {
     super();
     this.screenData = screenData;
     this.state = Object.assign({}, state);
-    this.correctItems = getCorrectList(this.screenData.answers, this.screenData.genre);
-  }
-
-  answer(item, id) {
-    return `<div class="genre-answer">
-              <div class="player-wrapper"></div>
-              <input type="checkbox" name="answer" value="${item.genre}" id="a-${id + 1}">
-              <label class="genre-answer-check" for="a-${id + 1}"></label>
-            </div>`;
   }
 
   get template() {
@@ -39,11 +18,19 @@ export class LevelGenre extends AbstractView {
               <h2 class="title title--life">Жизни: ${this.state.lives}</h2>
               <h2 class="title">${this.screenData.question}</h2>
               <form class="genre">    
-                ${this.screenData.answers.map(this.answer).join(``)}
+                ${this.screenData.answers.map(this._answer).join(``)}
                 <button class="genre-answer-send" type="submit">Ответить</button>
               </form>
               ${playerTemplate()}
             </section>`;
+  }
+
+  _answer(item, id) {
+    return `<div class="genre-answer">
+              <div class="player-wrapper"></div>
+              <input type="checkbox" name="answer" value="${item.genre}" id="a-${id + 1}">
+              <label class="genre-answer-check" for="a-${id + 1}"></label>
+            </div>`;
   }
 
   bind() {
@@ -65,20 +52,12 @@ export class LevelGenre extends AbstractView {
         return item.checked;
       });
 
-      if (checked.length === this.correctItems && checkAllRight(checked, this.screenData.genre)) {
-        ++this.state.correctAnswers;
-      } else {
-        --this.state.lives;
-      }
-
-      this.btnEvent(this.state);
-
-      return false;
+      this.btnEvent(checked);
     });
 
     const players = [...this.markup.querySelectorAll(`.player-wrapper`)];
     players.forEach((item, id) => {
-      return initializePlayer(item, this.screenData.answers[id].src, this.markup);
+      return initializePlayer(item, this.screenData.answers[id].src, this.markup, false, true);
     });
   }
 
