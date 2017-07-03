@@ -56,7 +56,7 @@ export class Level {
 
       this.onAnswer(state);
     };
-    showScreen(this.view.getMarkup);
+    showScreen(this.view.element);
   }
 
   onAnswer() {}

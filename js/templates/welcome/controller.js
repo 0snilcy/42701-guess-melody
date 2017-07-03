@@ -17,10 +17,10 @@ export class Welcome {
     this.view.btnEvent = () => {
       Application.showGame();
     };
-    showScreen(this.view.getMarkup);
+    showScreen(this.view.element);
   }
 
   static preloader() {
-    showScreen(new PreloaderView(data).getMarkup);
+    showScreen(new PreloaderView(data).element);
   }
 }

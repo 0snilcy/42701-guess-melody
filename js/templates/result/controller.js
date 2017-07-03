@@ -44,6 +44,6 @@ export class Result {
     ctx.btnEvent = () => {
       Application.showWelcome();
     };
-    showScreen(ctx.getMarkup);
+    showScreen(ctx.element);
   }
 }

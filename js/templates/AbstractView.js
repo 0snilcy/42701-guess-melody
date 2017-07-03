@@ -6,17 +6,16 @@ export default class AbstractView {
   constructor() {}
 
   get template() {
-    return `<template id="template"></template>`;
+    throw new Error(`You need to define a template`);
   }
 
   get element() {
-    this.markup = this.render(this.template);
-    this.bind();
-    return this.markup;
-  }
+    if (!this.markup) {
+      this.markup = this.render(this.template);
+      this.bind();
+    }
 
-  get getMarkup() {
-    return this.markup ? this.markup : this.element;
+    return this.markup;
   }
 
   render(string) {
@@ -25,7 +24,5 @@ export default class AbstractView {
     return container.firstElementChild;
   }
 
-  bind() {
-    this.markup.addEventListener(`click`, (event) => event.preventDefault());
-  }
+  bind() {}
 }
