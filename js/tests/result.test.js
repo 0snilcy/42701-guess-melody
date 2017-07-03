@@ -9,8 +9,8 @@ const rating = [{"time": 0, "answers": 10, "date": 1498741482488}, {"time": 0, "
 
 describe(`Экран резултатов`, () => {
   it(`Проверка формирования рейтига`, () => {
-    assert.equal(getUserRating({time: 0, answers: 10}, rating), 67);
-    assert.equal(getUserRating({time: 45, answers: 10}, rating), 73);
+    assert.equal(getUserRating({time: 0, answers: 10}, rating), 87);
+    assert.equal(getUserRating({time: 45, answers: 10}, rating), 67);
     assert.equal(getUserRating({time: 33, answers: 8}, rating), 53);
     assert.equal(getUserRating({time: 77, answers: 7}, rating), 40);
     assert.equal(getUserRating({time: 120, answers: 0}, rating), 0);

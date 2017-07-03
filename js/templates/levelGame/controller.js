@@ -5,6 +5,7 @@
 import {LevelArtist} from './viewLevelArtist';
 import {LevelGenre} from './viewLevelGenre';
 import showScreen from '../../tools/showScreen';
+import getCorrectId from './getCorrectId';
 
 const QuestionType = {
   genre(data, state) {
@@ -30,21 +31,30 @@ const checkAllRight = (list, correct) => {
 export class Level {
   constructor(data, state) {
     this.view = QuestionType[data.type](data, state);
-    this.correctItems = getCorrectList(this.screenData.answers, this.screenData.genre);
     this.view.btnEvent = (checked) => {
-      event.preventDefault();
+      switch (data.type) {
+        case `genre`:
+          this.correctItems = getCorrectList(data.answers, data.genre);
+          if (checked.length === this.correctItems && checkAllRight(checked, data.genre)) {
+            ++state.correctAnswers;
+          } else {
+            --state.lives;
+          }
+          break;
 
-      if (checked.length === this.correctItems && checkAllRight(checked, this.screenData.genre)) {
-        ++this.state.correctAnswers;
-      } else {
-        --this.state.lives;
+        case `artist`:
+          const correct = getCorrectId(data.answers);
+          if (checked === correct) {
+            ++state.correctAnswers;
+          } else {
+            --state.lives;
+          }
+          break;
+
+        default: break;
       }
 
-      this.btnEvent(this.state);
-
-      return false;
-
-      this.onAnswer(eventState);
+      this.onAnswer(state);
     };
     showScreen(this.view.getMarkup);
   }

@@ -3,7 +3,6 @@
  */
 
 import AbstractView from '../AbstractView';
-import getCorrectId from './getCorrectId';
 import playerTemplate from '../utils/playerTemplate';
 import initializePlayer from '../utils/player';
 
@@ -41,24 +40,17 @@ export class LevelArtist extends AbstractView {
 
   bind() {
     const btnList = [...this.markup.querySelectorAll(`.main-answer-r`)];
-    const correct = getCorrectId(this.screenData.answers);
 
     btnList.forEach((item, id) => {
-      item.addEventListener(`click`, () => {
-
-        if (id === correct) {
-          ++this.state.correctAnswers;
-        } else {
-          --this.state.lives;
-        }
-
-        this.btnEvent(this.state);
+      item.addEventListener(`click`, (event) => {
+        event.preventDefault();
+        this.btnEvent(id);
       });
     });
 
     const playerElement = this.markup.querySelector(`.player-wrapper`);
 
-    initializePlayer(playerElement, this.screenData.src, this.markup, true);
+    initializePlayer(playerElement, this.screenData.src, this.markup, true, false);
   }
 
   btnEvent() {}

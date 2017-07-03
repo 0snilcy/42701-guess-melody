@@ -57,7 +57,7 @@ export class LevelGenre extends AbstractView {
 
     const players = [...this.markup.querySelectorAll(`.player-wrapper`)];
     players.forEach((item, id) => {
-      return initializePlayer(item, this.screenData.answers[id].src, this.markup, false, true);
+      initializePlayer(item, this.screenData.answers[id].src, this.markup, false, true);
     });
   }
 

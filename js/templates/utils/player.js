@@ -5,14 +5,22 @@ const updateState = (element, player) => {
       `${parseInt(player.currentTime * 100 / player.duration, 10)}%`;
 };
 
+const stopOthersPlayers = () => {
+  const othersPlayers = document.querySelectorAll(`audio`);
+  if (othersPlayers) {
+    [...othersPlayers].forEach((item) => {
+      item.pause();
+    });
+  }
+};
 
 const syncState = (player, element) => {
   element.classList.toggle(`player--is-playing`, !player.paused);
 };
 
-
 const switchState = (state, player, element) => {
   if (player.paused) {
+    stopOthersPlayers();
     player.play();
     state.stopAnimation = animate.animate(
         animate.getAnimation(player.currentTime, 1000, player.duration),
