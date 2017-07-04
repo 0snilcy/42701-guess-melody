@@ -11,11 +11,15 @@ export default class AbstractView {
 
   get element() {
     if (!this.markup) {
-      this.markup = this.render(this.template);
-      this.bind();
+      this.getMarkup();
     }
 
     return this.markup;
+  }
+
+  getMarkup() {
+    this.markup = this.render(this.template);
+    this.bind();
   }
 
   render(string) {
