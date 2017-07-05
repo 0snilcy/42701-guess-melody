@@ -2,9 +2,9 @@
  * Created by wakedafuckup on 24.06.17.
  */
 
-import {Welcome} from './templates/welcome/controller';
-import {GameScreen} from './templates/gameScreen/gameScreen';
-import {Result} from './templates/result/controller';
+import Welcome from './templates/welcome/controller';
+import GameScreen from './templates/gameScreen/gameScreen';
+import Result from './templates/result/controller';
 import statsFormat from './tools/statsFormat';
 import BaseModel from './tools/baseModel';
 
@@ -40,7 +40,6 @@ class Application {
       [ControllerID.WELCOME]: new Welcome(),
       [ControllerID.GAME]: new GameScreen(data),
       [ControllerID.STATS]: new Result(),
-
     };
 
     window.onhashchange = () => {

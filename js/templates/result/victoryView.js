@@ -4,7 +4,7 @@
 
 import AbstractView from '../AbstractView';
 
-export class VictoryView extends AbstractView {
+export default class VictoryView extends AbstractView {
   constructor(model, answers, rating) {
     super();
     this.answers = answers;
@@ -23,7 +23,7 @@ export class VictoryView extends AbstractView {
   }
 
   bind() {
-    const btn = this.markup.querySelector(`.main-replay`);
+    const btn = this.element.querySelector(`.main-replay`);
     btn.addEventListener(`click`, this.btnEvent);
   }
 

@@ -6,7 +6,7 @@ import AbstractView from '../AbstractView';
 import playerTemplate from '../utils/playerTemplate';
 import initializePlayer from '../utils/player';
 
-export class LevelGenre extends AbstractView {
+export default class LevelGenre extends AbstractView {
   constructor(screenData, state) {
     super();
     this.screenData = screenData;
@@ -34,7 +34,7 @@ export class LevelGenre extends AbstractView {
   }
 
   bind() {
-    const inputList = [...this.markup.querySelectorAll(`.genre-answer input[name=answer]`)];
+    const inputList = [...this.element.querySelectorAll(`.genre-answer input[name=answer]`)];
     inputList.forEach((item) => {
       item.addEventListener(`click`, () => {
         btnSend.disabled = !inputList.some((input) => {
@@ -43,7 +43,7 @@ export class LevelGenre extends AbstractView {
       });
     });
 
-    const btnSend = this.markup.querySelector(`.genre-answer-send`);
+    const btnSend = this.element.querySelector(`.genre-answer-send`);
     btnSend.disabled = true;
     btnSend.addEventListener(`click`, (event) => {
       event.preventDefault();
@@ -55,9 +55,9 @@ export class LevelGenre extends AbstractView {
       this.btnEvent(checked);
     });
 
-    const players = [...this.markup.querySelectorAll(`.player-wrapper`)];
+    const players = [...this.element.querySelectorAll(`.player-wrapper`)];
     players.forEach((item, id) => {
-      initializePlayer(item, this.screenData.answers[id].src, this.markup, false, true);
+      initializePlayer(item, this.screenData.answers[id].src, this.element, false, true);
     });
   }
 

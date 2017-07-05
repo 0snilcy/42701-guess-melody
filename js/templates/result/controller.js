@@ -2,15 +2,15 @@
  * Created by wakedafuckup on 25.06.17.
  */
 
-import {DefeatView} from './defeatView';
-import {VictoryView} from './victoryView';
+import DefeatView from './defeatView';
+import VictoryView from './victoryView';
 import data from './model';
 import showScreen from '../../tools/showScreen';
 import Application from '../../main';
 import BaseModel from '../../tools/baseModel';
 import getUserRating from './getUserRating';
 
-export class Result {
+export default class Result {
   init(stats) {
     if (stats && stats.lives) {
       this.model = new class extends BaseModel {

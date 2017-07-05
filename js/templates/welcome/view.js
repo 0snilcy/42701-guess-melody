@@ -4,7 +4,7 @@
 
 import AbstractView from '../AbstractView';
 
-export class WelcomeView extends AbstractView {
+export default class WelcomeView extends AbstractView {
   constructor(data) {
     super();
     this.data = data;
@@ -20,7 +20,7 @@ export class WelcomeView extends AbstractView {
   }
 
   bind() {
-    const btn = this.markup.querySelector(`.main-play`);
+    const btn = this.element.querySelector(`.main-play`);
     btn.addEventListener(`click`, this.btnEvent);
   }
 

@@ -3,7 +3,7 @@
  */
 
 import {initial, Screen} from './model';
-import {Level} from '../levelGame/controller';
+import Level from '../levelGame/controller';
 import Application from '../../main';
 import timer from '../utils/timer';
 
@@ -17,7 +17,7 @@ const getNextScreen = (data, current, max) => {
   }
 };
 
-export class GameScreen {
+export default class GameScreen {
   constructor(data) {
     this.dataGame = data;
     this.dataGameMax = this.dataGame.length - 1;

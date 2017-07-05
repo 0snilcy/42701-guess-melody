@@ -4,7 +4,7 @@
 
 import AbstractView from '../AbstractView';
 
-export class PreloaderView extends AbstractView {
+export default class PreloaderView extends AbstractView {
   constructor(data) {
     super();
     this.data = data;

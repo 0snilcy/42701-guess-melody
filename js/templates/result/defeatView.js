@@ -4,7 +4,7 @@
 
 import AbstractView from '../AbstractView';
 
-export class DefeatView extends AbstractView {
+export default class DefeatView extends AbstractView {
   constructor(model) {
     super();
     this.model = model;
@@ -20,7 +20,7 @@ export class DefeatView extends AbstractView {
   }
 
   bind() {
-    const btn = this.markup.querySelector(`.main-replay`);
+    const btn = this.element.querySelector(`.main-replay`);
     btn.addEventListener(`click`, this.btnEvent);
   }
 

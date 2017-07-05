@@ -6,7 +6,7 @@ import AbstractView from '../AbstractView';
 import playerTemplate from '../utils/playerTemplate';
 import initializePlayer from '../utils/player';
 
-export class LevelArtist extends AbstractView {
+export default class LevelArtist extends AbstractView {
   constructor(screenData, state) {
     super();
     this.screenData = screenData;
@@ -39,7 +39,7 @@ export class LevelArtist extends AbstractView {
   }
 
   bind() {
-    const btnList = [...this.markup.querySelectorAll(`.main-answer-r`)];
+    const btnList = [...this.element.querySelectorAll(`.main-answer-r`)];
 
     btnList.forEach((item, id) => {
       item.addEventListener(`click`, (event) => {
@@ -48,9 +48,9 @@ export class LevelArtist extends AbstractView {
       });
     });
 
-    const playerElement = this.markup.querySelector(`.player-wrapper`);
+    const playerElement = this.element.querySelector(`.player-wrapper`);
 
-    initializePlayer(playerElement, this.screenData.src, this.markup, true, false);
+    initializePlayer(playerElement, this.screenData.src, this.element, true, false);
   }
 
   btnEvent() {}

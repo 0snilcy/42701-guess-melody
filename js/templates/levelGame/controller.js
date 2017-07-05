@@ -2,8 +2,8 @@
  * Created by wakedafuckup on 25.06.17.
  */
 
-import {LevelArtist} from './viewLevelArtist';
-import {LevelGenre} from './viewLevelGenre';
+import LevelArtist from './viewLevelArtist';
+import LevelGenre from './viewLevelGenre';
 import showScreen from '../../tools/showScreen';
 import getCorrectId from './getCorrectId';
 
@@ -28,7 +28,7 @@ const checkAllRight = (list, correct) => {
   });
 };
 
-export class Level {
+export default class Level {
   constructor(data, state) {
     this.view = QuestionType[data.type](data, state);
     this.view.btnEvent = (checked) => {

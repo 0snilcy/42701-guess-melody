@@ -16,9 +16,11 @@ export default class BaseModel {
   load(adapter = defaultAdapter) {
     return fetch(this.urlRead)
       .then((resp) => {
-        return resp.json();
+        return resp.status !== 404 ? resp.json() : false;
       })
-      .then(adapter.preprocess);
+      .then((data) => {
+        return data ? adapter.preprocess(data) : false;
+      });
   }
 
   send(data, adapter = defaultAdapter) {
