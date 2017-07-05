@@ -48,7 +48,6 @@ export default class GameScreen {
         case Screen.DEFEAT:
         case Screen.WIN:
           clearTimeout(this.gameTimer);
-          clearTimeout(this.levelTimer);
           clearInterval(this.setTimerGame);
           nextState.time = this.timerValue;
           timer.remove();
@@ -56,7 +55,6 @@ export default class GameScreen {
           break;
 
         case Screen.GAME:
-          clearTimeout(this.levelTimer);
           this.changeLevel(nextState);
           break;
 
@@ -64,10 +62,5 @@ export default class GameScreen {
           throw new Error(`Unknown result ${nextState}`);
       }
     };
-
-    this.levelTimer = setTimeout(() => {
-      timer.remove();
-      Application.showResult();
-    }, initial.levelLimit * 1000);
   }
 }

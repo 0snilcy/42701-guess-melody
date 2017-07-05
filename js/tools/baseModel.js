@@ -16,7 +16,7 @@ export default class BaseModel {
   load(adapter = defaultAdapter) {
     return fetch(this.urlRead)
       .then((resp) => {
-        return resp.status !== 404 ? resp.json() : false;
+        return resp.status === 200 ? resp.json() : false;
       })
       .then((data) => {
         return data ? adapter.preprocess(data) : false;
