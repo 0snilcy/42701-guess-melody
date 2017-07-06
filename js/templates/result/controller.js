@@ -25,7 +25,7 @@ export default class Result {
       this.model.load()
         .then((serverStats) => {
           const formatStats = this.model.formatToServer(stats);
-          const rating = serverStats ? getUserRating(formatStats, serverStats) : false;
+          const rating = serverStats ? getUserRating(formatStats, serverStats) : null;
 
           this.view = new VictoryView(data.victory, stats.correctAnswers, rating);
           this._setEvent(this.view);

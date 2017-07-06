@@ -16,6 +16,6 @@ export default (item, rating = []) => {
     const position = ratingList.indexOf(item) + 1;
     return Math.round(((ratingList.length - position) / ratingList.length) * 100);
   } else {
-    return false;
+    return null;
   }
 };
