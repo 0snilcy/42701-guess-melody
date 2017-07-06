@@ -17,9 +17,17 @@ export default class VictoryView extends AbstractView {
               <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
               <h2 class="title">${this.model.title}</h2>
               <div class="main-stat">За&nbsp;2&nbsp;минуты<br>вы&nbsp;отгадали ${this.answers}&nbsp;мелодий</div>
-              <span class="main-comparison">Это&nbsp;лучше чем у&nbsp;${this.rating}%&nbsp;игроков</span>
+              ${this.usersRating};
               <span role="button" tabindex="0" class="main-replay">Сыграть ещё раз</span>
             </section>`;
+  }
+
+  get usersRating() {
+    if (this.rating) {
+      return `<span class="main-comparison">Это&nbsp;лучше чем у&nbsp;${this.rating}%&nbsp;игроков</span>`;
+    } else {
+      return ``;
+    }
   }
 
   bind() {
